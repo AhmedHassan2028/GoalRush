@@ -24,7 +24,7 @@ const ContactUs = () => {
       icon: Phone,
       title: 'Phone Support',
       description: 'Talk to our support team directly',
-      contact: '+1 (555) 123-4567',
+      contact: '+1 (613) 301-0561',
       action: 'Call Now',
       color: 'text-blue-600',
     },
