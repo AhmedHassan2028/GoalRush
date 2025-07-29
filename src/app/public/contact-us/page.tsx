@@ -16,7 +16,7 @@ const ContactUs = () => {
       icon: Mail,
       title: 'Email Support',
       description: 'Get help via email within 24 hours',
-      contact: 'support@platform.com',
+      contact: 'ahmedhass0609@gmail.com',
       action: 'Send Email',
       color: 'text-emerald-600',
     },
@@ -105,9 +105,9 @@ const ContactUs = () => {
       {/* Contact Methods */}
       <div>
         <h2 className='text-3xl font-bold text-center mb-12'>
-          <span className='bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent'>
+          {/* <span className='bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent'>
             How Can We Help?
-          </span>
+          </span> */}
         </h2>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
           {contactMethods.map((method, index) => (
