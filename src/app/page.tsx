@@ -8,7 +8,7 @@ import {
   Users,
   ArrowRight,
   Star,
-  CheckCircle,
+  // CheckCircle,
   LayoutDashboard,
   User,
 } from 'lucide-react'
@@ -38,14 +38,14 @@ export default function Home() {
     },
   ]
 
-  const benefits = [
-    'Modern React with Next.js 15',
-    'Authentication with Clerk',
-    'Beautiful UI with Tailwind CSS',
-    'Type-safe with TypeScript',
-    'Dark mode support',
-    'Mobile responsive design',
-  ]
+  // const benefits = [
+  //   'Modern React with Next.js 15',
+  //   'Authentication with Clerk',
+  //   'Beautiful UI with Tailwind CSS',
+  //   'Type-safe with TypeScript',
+  //   'Dark mode support',
+  //   'Mobile responsive design',
+  // ]
 
   if (!isLoaded) {
     return (
@@ -226,7 +226,7 @@ export default function Home() {
               </div>
 
               {/* Benefits Section */}
-              <div className='bg-gradient-to-r from-emerald-500/10 to-teal-500/10 dark:from-emerald-400/10 dark:to-teal-400/10 rounded-3xl p-12 border border-emerald-200/50 dark:border-emerald-800/50'>
+              {/* <div className='bg-gradient-to-r from-emerald-500/10 to-teal-500/10 dark:from-emerald-400/10 dark:to-teal-400/10 rounded-3xl p-12 border border-emerald-200/50 dark:border-emerald-800/50'>
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center'>
                   <div className='space-y-6'>
                     <h2 className='text-2xl md:text-3xl font-bold'>
@@ -258,7 +258,7 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* CTA Section */}
               <div className='text-center space-y-8 py-12'>
