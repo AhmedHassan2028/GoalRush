@@ -73,7 +73,7 @@ export default function Home() {
               </div>
               <div>
                 <h1 className='text-xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent'>
-                  Next-Gen Platform
+                  GoalRush
                 </h1>
               </div>
             </div>
