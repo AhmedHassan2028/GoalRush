@@ -7,7 +7,7 @@ import {
   Send,
   MessageSquare,
   Headphones,
-  Users,
+  // Users,
 } from 'lucide-react'
 
 const ContactUs = () => {
@@ -67,12 +67,12 @@ const ContactUs = () => {
     },
   ]
 
-  const supportStats = [
-    { icon: Users, label: 'Support Agents', value: '50+' },
-    { icon: Clock, label: 'Avg Response Time', value: '< 2hrs' },
-    { icon: MessageSquare, label: 'Tickets Resolved', value: '10K+' },
-    { icon: Phone, label: 'Customer Satisfaction', value: '98%' },
-  ]
+  // const supportStats = [
+  //   { icon: Users, label: 'Support Agents', value: '50+' },
+  //   { icon: Clock, label: 'Avg Response Time', value: '< 2hrs' },
+  //   { icon: MessageSquare, label: 'Tickets Resolved', value: '10K+' },
+  //   { icon: Phone, label: 'Customer Satisfaction', value: '98%' },
+  // ]
 
   return (
     <div className='space-y-12'>
@@ -88,7 +88,7 @@ const ContactUs = () => {
       </div>
 
       {/* Support Stats */}
-      <div className='grid grid-cols-2 md:grid-cols-4 gap-6'>
+      {/* <div className='grid grid-cols-2 md:grid-cols-4 gap-6'>
         {supportStats.map((stat, index) => (
           <div key={index} className='text-center'>
             <div className='inline-flex items-center justify-center w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg mb-3'>
@@ -100,7 +100,7 @@ const ContactUs = () => {
             <div className='text-sm text-muted-foreground'>{stat.label}</div>
           </div>
         ))}
-      </div>
+      </div> */}
 
       {/* Contact Methods */}
       <div>
