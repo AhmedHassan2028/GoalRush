@@ -27,7 +27,8 @@ export default function Home() {
     {
       icon: Zap,
       title: 'Lightning Fast',
-      description: 'Optimized performance with Next.js 15 and modern tooling',
+      description:
+        'Accelerate your progress with focused tracking and smart motivation.',
     },
     {
       icon: Users,
