@@ -32,7 +32,8 @@ export default function Home() {
     {
       icon: Users,
       title: 'Team Ready',
-      description: 'Built for collaboration with role-based access control',
+      description:
+        'Collaborate seamlessly with your team to set, track, and crush shared goals—together',
     },
   ]
 
@@ -155,19 +156,19 @@ export default function Home() {
                 <div className='space-y-4'>
                   <div className='inline-flex items-center px-4 py-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-400 rounded-full text-sm font-medium'>
                     <Star className='h-4 w-4 mr-2' />
-                    Welcome to the Future
+                    Welcome to a space where ambition meets clarity.
                   </div>
                   <h1 className='text-3xl md:text-5xl font-bold tracking-tight'>
                     <span className='bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent'>
-                      Next-Gen
+                      GoalRush
                     </span>
                     <br />
-                    <span className='text-foreground'>Platform</span>
+                    <span className='text-foreground'></span>
                   </h1>
                   <p className='text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed'>
-                    Experience the perfect blend of modern technology, beautiful
-                    design, and powerful features. Built for developers,
-                    designed for users.
+                    Turn ambition into action with a clean, motivating space to
+                    set, track, and crush your goals. Stay focused, build
+                    momentum, and achieve more without the clutter.
                   </p>
                 </div>
 
