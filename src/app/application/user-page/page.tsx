@@ -27,26 +27,26 @@ export default function UserAccount() {
 
   const accountStats = [
     {
-      label: 'Profile Views',
-      value: '2,847',
+      label: 'Friends',
+      value: '0',
       icon: TrendingUp,
       color: 'text-blue-600',
     },
     {
-      label: 'Total Orders',
-      value: '34',
+      label: 'Total Goals Created',
+      value: '0',
       icon: Calendar,
       color: 'text-green-600',
     },
     {
-      label: 'Loyalty Points',
-      value: '1,256',
+      label: 'Goals completed',
+      value: '0',
       icon: Award,
       color: 'text-purple-600',
     },
     {
-      label: 'Account Age',
-      value: '1.5 years',
+      label: 'Account Creation date',
+      value: 'Access from firebase',
       icon: Clock,
       color: 'text-orange-600',
     },

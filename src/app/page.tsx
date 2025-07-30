@@ -281,12 +281,12 @@ export default function Home() {
                     Start Your Journey
                     <ArrowRight className='h-5 w-5 ml-2' />
                   </Link>
-                  <Link
+                  {/* <Link
                     href='/public/contact-us'
                     className='inline-flex items-center px-8 py-4 border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-xl font-semibold text-lg transition-all duration-200'
                   >
                     Contact Sales
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>
