@@ -22,7 +22,8 @@ export default function Home() {
     {
       icon: Shield,
       title: 'Secure by Default',
-      description: 'Enterprise-grade security with authentication built-in',
+      description:
+        'Powered by secure authentication, session handling, and role-based access from the start.',
     },
     {
       icon: Zap,
@@ -200,8 +201,8 @@ export default function Home() {
                     </span>
                   </h2>
                   <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
-                    Everything you need to build modern applications, right out
-                    of the box.
+                    Because reaching your goals is easier—and more fun—when
+                    you&apos;re tracking progress and competing with friends.
                   </p>
                 </div>
 
