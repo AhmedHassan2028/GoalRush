@@ -52,7 +52,7 @@ export default function UserAccount() {
     },
   ]
 
-  const recentOrders = [
+  const recentGoals = [
     {
       id: 'ORD-001',
       item: 'Premium Subscription',
@@ -197,9 +197,9 @@ export default function UserAccount() {
         <div className='bg-card rounded-xl p-6 border shadow-sm'>
           <div className='flex items-center justify-between mb-6'>
             <div>
-              <h3 className='text-lg font-semibold'>Recent Orders</h3>
+              <h3 className='text-lg font-semibold'>Recent Goals</h3>
               <p className='text-muted-foreground text-sm'>
-                Your latest purchases and subscriptions
+                Your latest goals and activity
               </p>
             </div>
             <button className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium'>
@@ -207,7 +207,7 @@ export default function UserAccount() {
             </button>
           </div>
           <div className='space-y-4'>
-            {recentOrders.map(order => (
+            {recentGoals.map(order => (
               <div
                 key={order.id}
                 className='flex items-center justify-between p-4 bg-muted/20 rounded-lg hover:bg-muted/30 transition-colors'
