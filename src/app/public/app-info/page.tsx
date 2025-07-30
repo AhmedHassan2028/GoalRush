@@ -3,10 +3,10 @@ import {
   Shield,
   Zap,
   Users,
-  Globe,
-  Smartphone,
-  Cloud,
-  Headphones,
+  // Globe,
+  // Smartphone,
+  // Cloud,
+  // Headphones,
 } from 'lucide-react'
 
 export default function AppInfo() {
@@ -15,52 +15,52 @@ export default function AppInfo() {
       icon: Shield,
       title: 'Secure Authentication',
       description:
-        'Enterprise-grade security with multi-factor authentication and data encryption.',
+        'Powered by secure authentication, session handling, and role-based access from the start.',
       color: 'text-emerald-600',
     },
     {
       icon: Zap,
       title: 'Lightning Fast',
       description:
-        'Optimized performance with sub-second load times and responsive design.',
+        'Accelerate your progress with focused tracking and smart motivation.',
       color: 'text-yellow-600',
     },
     {
       icon: Users,
       title: 'Team Collaboration',
       description:
-        'Built-in tools for seamless team collaboration and project management.',
+        'Collaborate seamlessly with your team to set, track, and crush shared goals—together',
       color: 'text-blue-600',
     },
-    {
-      icon: Globe,
-      title: 'Global Access',
-      description:
-        'Access your data from anywhere in the world with 99.9% uptime guarantee.',
-      color: 'text-purple-600',
-    },
-    {
-      icon: Smartphone,
-      title: 'Mobile Ready',
-      description:
-        'Fully responsive design that works perfectly on all devices and screen sizes.',
-      color: 'text-pink-600',
-    },
-    {
-      icon: Cloud,
-      title: 'Cloud Integration',
-      description:
-        'Seamless integration with popular cloud services and storage providers.',
-      color: 'text-cyan-600',
-    },
+    // {
+    //   icon: Globe,
+    //   title: 'Global Access',
+    //   description:
+    //     'Access your data from anywhere in the world with 99.9% uptime guarantee.',
+    //   color: 'text-purple-600',
+    // },
+    // {
+    //   icon: Smartphone,
+    //   title: 'Mobile Ready',
+    //   description:
+    //     'Fully responsive design that works perfectly on all devices and screen sizes.',
+    //   color: 'text-pink-600',
+    // },
+    // {
+    //   icon: Cloud,
+    //   title: 'Cloud Integration',
+    //   description:
+    //     'Seamless integration with popular cloud services and storage providers.',
+    //   color: 'text-cyan-600',
+    // },
   ]
 
-  const stats = [
-    { number: '100K+', label: 'Active Users', icon: Users },
-    { number: '99.9%', label: 'Uptime', icon: Shield },
-    { number: '24/7', label: 'Support', icon: Headphones },
-    { number: '50+', label: 'Countries', icon: Globe },
-  ]
+  // const stats = [
+  //   { number: '100K+', label: 'Active Users', icon: Users },
+  //   { number: '99.9%', label: 'Uptime', icon: Shield },
+  //   { number: '24/7', label: 'Support', icon: Headphones },
+  //   { number: '50+', label: 'Countries', icon: Globe },
+  // ]
 
   const technologies = [
     { name: 'Next.js', description: 'React framework for production' },
@@ -79,14 +79,14 @@ export default function AppInfo() {
           Welcome to Our Platform
         </h1>
         <p className='text-xl text-muted-foreground max-w-3xl mx-auto'>
-          A modern, secure, and scalable application built with the latest
-          technologies. Experience the future of web applications with our
-          cutting-edge platform.
+          Where accountability meets fun — join friends in challenging each
+          other to reach new milestones every day, or go solo and crush your
+          goals at your own pace.
         </p>
       </div>
 
       {/* Stats Section */}
-      <div className='grid grid-cols-2 md:grid-cols-4 gap-6'>
+      {/* <div className='grid grid-cols-2 md:grid-cols-4 gap-6'>
         {stats.map((stat, index) => (
           <div key={index} className='text-center'>
             <div className='inline-flex items-center justify-center w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg mb-3'>
@@ -98,7 +98,7 @@ export default function AppInfo() {
             <div className='text-sm text-muted-foreground'>{stat.label}</div>
           </div>
         ))}
-      </div>
+      </div> */}
 
       {/* Features Grid */}
       <div>
@@ -156,7 +156,7 @@ export default function AppInfo() {
       </div>
 
       {/* Call to Action */}
-      <div className='text-center bg-gradient-to-r from-emerald-500/10 to-teal-500/10 dark:from-emerald-400/10 dark:to-teal-400/10 rounded-2xl p-8 border border-emerald-200/50 dark:border-emerald-800/50'>
+      {/* <div className='text-center bg-gradient-to-r from-emerald-500/10 to-teal-500/10 dark:from-emerald-400/10 dark:to-teal-400/10 rounded-2xl p-8 border border-emerald-200/50 dark:border-emerald-800/50'>
         <h2 className='text-2xl font-bold mb-4'>Ready to Get Started?</h2>
         <p className='text-muted-foreground mb-6 max-w-2xl mx-auto'>
           Join thousands of users who trust our platform for their daily
@@ -170,7 +170,7 @@ export default function AppInfo() {
             Learn More
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
