@@ -2,11 +2,11 @@ import React from 'react'
 import {
   Mail,
   Phone,
-  MapPin,
-  Clock,
-  Send,
-  MessageSquare,
-  Headphones,
+  // MapPin,
+  // Clock,
+  // Send,
+  // MessageSquare,
+  // Headphones,
   // Users,
 } from 'lucide-react'
 
@@ -15,7 +15,7 @@ const ContactUs = () => {
     {
       icon: Mail,
       title: 'Email Support',
-      description: 'Get help via email within 24 hours',
+      description: 'Get help or ask questions via email',
       contact: 'ahmedhass0609@gmail.com',
       action: 'Send Email',
       color: 'text-emerald-600',
@@ -23,49 +23,49 @@ const ContactUs = () => {
     {
       icon: Phone,
       title: 'Phone Support',
-      description: 'Talk to our support team directly',
+      description: 'Contact me directly',
       contact: '+1 (613) 301-0561',
       action: 'Call Now',
       color: 'text-blue-600',
     },
-    {
-      icon: MessageSquare,
-      title: 'Live Chat',
-      description: 'Chat with our team in real-time',
-      contact: 'Available 9 AM - 6 PM EST',
-      action: 'Start Chat',
-      color: 'text-purple-600',
-    },
-    {
-      icon: Headphones,
-      title: 'Help Center',
-      description: 'Browse our knowledge base',
-      contact: '500+ articles and guides',
-      action: 'Browse FAQ',
-      color: 'text-orange-600',
-    },
+    // {
+    //   icon: MessageSquare,
+    //   title: 'Live Chat',
+    //   description: 'Chat with our team in real-time',
+    //   contact: 'Available 9 AM - 6 PM EST',
+    //   action: 'Start Chat',
+    //   color: 'text-purple-600',
+    // },
+    // {
+    //   icon: Headphones,
+    //   title: 'Help Center',
+    //   description: 'Browse our knowledge base',
+    //   contact: '500+ articles and guides',
+    //   action: 'Browse FAQ',
+    //   color: 'text-orange-600',
+    // },
   ]
 
-  const officeLocations = [
-    {
-      city: 'San Francisco',
-      address: '123 Tech Street, SF, CA 94105',
-      phone: '+1 (555) 123-4567',
-      hours: 'Mon-Fri: 9 AM - 6 PM PST',
-    },
-    {
-      city: 'New York',
-      address: '456 Business Ave, NYC, NY 10001',
-      phone: '+1 (555) 987-6543',
-      hours: 'Mon-Fri: 9 AM - 6 PM EST',
-    },
-    {
-      city: 'London',
-      address: '789 Innovation Lane, London, UK',
-      phone: '+44 20 7123 4567',
-      hours: 'Mon-Fri: 9 AM - 5 PM GMT',
-    },
-  ]
+  // const officeLocations = [
+  //   {
+  //     city: 'San Francisco',
+  //     address: '123 Tech Street, SF, CA 94105',
+  //     phone: '+1 (555) 123-4567',
+  //     hours: 'Mon-Fri: 9 AM - 6 PM PST',
+  //   },
+  //   {
+  //     city: 'New York',
+  //     address: '456 Business Ave, NYC, NY 10001',
+  //     phone: '+1 (555) 987-6543',
+  //     hours: 'Mon-Fri: 9 AM - 6 PM EST',
+  //   },
+  //   {
+  //     city: 'London',
+  //     address: '789 Innovation Lane, London, UK',
+  //     phone: '+44 20 7123 4567',
+  //     hours: 'Mon-Fri: 9 AM - 5 PM GMT',
+  //   },
+  // ]
 
   // const supportStats = [
   //   { icon: Users, label: 'Support Agents', value: '50+' },
@@ -82,8 +82,7 @@ const ContactUs = () => {
           Get in Touch
         </h1>
         <p className='text-xl text-muted-foreground max-w-3xl mx-auto'>
-          Have questions or need support? Our team is here to help you succeed.
-          Choose the best way to reach us below.
+          Have questions or need support? Choose the best way to reach me.
         </p>
       </div>
 
@@ -148,7 +147,7 @@ const ContactUs = () => {
 
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-12'>
         {/* Contact Form */}
-        <div className='bg-card rounded-xl p-8 border shadow-sm'>
+        {/* <div className='bg-card rounded-xl p-8 border shadow-sm'>
           <h3 className='text-2xl font-bold mb-6'>Send us a Message</h3>
           <form className='space-y-6'>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
@@ -207,10 +206,10 @@ const ContactUs = () => {
               Send Message
             </button>
           </form>
-        </div>
+        </div> */}
 
         {/* Office Locations */}
-        <div className='space-y-6'>
+        {/* <div className='space-y-6'>
           <h3 className='text-2xl font-bold'>Our Offices</h3>
           {officeLocations.map((office, index) => (
             <div
@@ -236,11 +235,11 @@ const ContactUs = () => {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
 
       {/* FAQ Preview */}
-      <div className='text-center bg-gradient-to-r from-emerald-500/10 to-teal-500/10 dark:from-emerald-400/10 dark:to-teal-400/10 rounded-2xl p-8 border border-emerald-200/50 dark:border-emerald-800/50'>
+      {/* <div className='text-center bg-gradient-to-r from-emerald-500/10 to-teal-500/10 dark:from-emerald-400/10 dark:to-teal-400/10 rounded-2xl p-8 border border-emerald-200/50 dark:border-emerald-800/50'>
         <h2 className='text-2xl font-bold mb-4'>Looking for Quick Answers?</h2>
         <p className='text-muted-foreground mb-6 max-w-2xl mx-auto'>
           Check out our comprehensive FAQ section and help center for instant
@@ -249,7 +248,7 @@ const ContactUs = () => {
         <button className='px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-semibold transition-colors'>
           Visit Help Center
         </button>
-      </div>
+      </div> */}
     </div>
   )
 }
