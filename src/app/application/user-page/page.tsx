@@ -1,8 +1,8 @@
 import React from 'react'
 import {
   Mail,
-  Phone,
-  MapPin,
+  // Phone,
+  // MapPin,
   Calendar,
   Shield,
   Settings,
@@ -151,14 +151,14 @@ export default function UserAccount() {
                 <Mail className='h-4 w-4' />
                 {userInfo.email}
               </div>
-              <div className='flex items-center gap-2 text-muted-foreground'>
+              {/* <div className='flex items-center gap-2 text-muted-foreground'>
                 <Phone className='h-4 w-4' />
                 {userInfo.phone}
-              </div>
-              <div className='flex items-center gap-2 text-muted-foreground'>
+              </div> */}
+              {/* <div className='flex items-center gap-2 text-muted-foreground'>
                 <MapPin className='h-4 w-4' />
                 {userInfo.location}
-              </div>
+              </div> */}
               <div className='flex items-center gap-2 text-muted-foreground'>
                 <Calendar className='h-4 w-4' />
                 Member since {userInfo.joinDate}
