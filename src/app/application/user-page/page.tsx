@@ -4,9 +4,9 @@ import {
   // Phone,
   // MapPin,
   Calendar,
-  Shield,
-  Settings,
-  Edit,
+  // Shield,
+  // Settings,
+  // Edit,
   Camera,
   Award,
   Clock,
@@ -52,55 +52,55 @@ export default function UserAccount() {
     },
   ]
 
-  const recentGoals = [
-    {
-      id: 'ORD-001',
-      item: 'Premium Subscription',
-      date: '2024-01-15',
-      status: 'Active',
-      amount: '$29.99',
-    },
-    {
-      id: 'ORD-002',
-      item: 'Mobile App Pro',
-      date: '2024-01-10',
-      status: 'Completed',
-      amount: '$19.99',
-    },
-    {
-      id: 'ORD-003',
-      item: 'Cloud Storage 1TB',
-      date: '2024-01-05',
-      status: 'Active',
-      amount: '$9.99',
-    },
-    {
-      id: 'ORD-004',
-      item: 'API Access Plan',
-      date: '2023-12-28',
-      status: 'Expired',
-      amount: '$49.99',
-    },
-  ]
+  // const recentGoals = [
+  //   {
+  //     id: 'ORD-001',
+  //     item: 'Premium Subscription',
+  //     date: '2024-01-15',
+  //     status: 'Active',
+  //     amount: '$29.99',
+  //   },
+  //   {
+  //     id: 'ORD-002',
+  //     item: 'Mobile App Pro',
+  //     date: '2024-01-10',
+  //     status: 'Completed',
+  //     amount: '$19.99',
+  //   },
+  //   {
+  //     id: 'ORD-003',
+  //     item: 'Cloud Storage 1TB',
+  //     date: '2024-01-05',
+  //     status: 'Active',
+  //     amount: '$9.99',
+  //   },
+  //   {
+  //     id: 'ORD-004',
+  //     item: 'API Access Plan',
+  //     date: '2023-12-28',
+  //     status: 'Expired',
+  //     amount: '$49.99',
+  //   },
+  // ]
 
-  const preferences = [
-    {
-      category: 'Notifications',
-      setting: 'Email notifications enabled',
-      enabled: true,
-    },
-    {
-      category: 'Privacy',
-      setting: 'Profile visibility: Public',
-      enabled: true,
-    },
-    {
-      category: 'Security',
-      setting: 'Two-factor authentication',
-      enabled: true,
-    },
-    { category: 'Marketing', setting: 'Promotional emails', enabled: false },
-  ]
+  // const preferences = [
+  //   {
+  //     category: 'Notifications',
+  //     setting: 'Email notifications enabled',
+  //     enabled: true,
+  //   },
+  //   {
+  //     category: 'Privacy',
+  //     setting: 'Profile visibility: Public',
+  //     enabled: true,
+  //   },
+  //   {
+  //     category: 'Security',
+  //     setting: 'Two-factor authentication',
+  //     enabled: true,
+  //   },
+  //   { category: 'Marketing', setting: 'Promotional emails', enabled: false },
+  // ]
 
   return (
     <div className='space-y-8'>
@@ -114,10 +114,10 @@ export default function UserAccount() {
             Manage your account settings and preferences
           </p>
         </div>
-        <button className='flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors'>
+        {/* <button className='flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors'>
           <Edit className='h-4 w-4' />
           Edit Profile
-        </button>
+        </button> */}
       </div>
 
       {/* User Info Card */}
@@ -135,15 +135,15 @@ export default function UserAccount() {
           <div className='flex-1 space-y-3'>
             <div className='flex items-center gap-3'>
               <h2 className='text-2xl font-bold'>{userInfo.name}</h2>
-              {userInfo.verified && (
+              {/* {userInfo.verified && (
                 <div className='flex items-center gap-1 px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full text-xs font-medium'>
                   <Shield className='h-3 w-3' />
                   Verified
                 </div>
-              )}
-              <span className='px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 rounded-full text-sm font-medium'>
+              )} */}
+              {/* <span className='px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 rounded-full text-sm font-medium'>
                 {userInfo.role}
-              </span>
+              </span> */}
             </div>
 
             <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm'>
@@ -194,7 +194,7 @@ export default function UserAccount() {
 
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
         {/* Recent Orders */}
-        <div className='bg-card rounded-xl p-6 border shadow-sm'>
+        {/* <div className='bg-card rounded-xl p-6 border shadow-sm'>
           <div className='flex items-center justify-between mb-6'>
             <div>
               <h3 className='text-lg font-semibold'>Recent Goals</h3>
@@ -234,52 +234,47 @@ export default function UserAccount() {
                 <span className='font-semibold'>{order.amount}</span>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* Account Preferences */}
-        <div className='bg-card rounded-xl p-6 border shadow-sm'>
-          <div className='flex items-center justify-between mb-6'>
-            <div>
-              <h3 className='text-lg font-semibold'>Account Preferences</h3>
-              <p className='text-muted-foreground text-sm'>
-                Manage your account settings
-              </p>
-            </div>
-            <button className='p-2 bg-muted hover:bg-muted/80 rounded-lg transition-colors'>
-              <Settings className='h-4 w-4' />
-            </button>
-          </div>
-          <div className='space-y-4'>
-            {preferences.map((pref, index) => (
-              <div
-                key={index}
-                className='flex items-center justify-between p-4 bg-muted/20 rounded-lg'
-              >
-                <div>
-                  <p className='font-medium'>{pref.category}</p>
-                  <p className='text-sm text-muted-foreground'>
-                    {pref.setting}
-                  </p>
-                </div>
-                <div
-                  className={`w-12 h-6 rounded-full transition-colors ${
-                    pref.enabled
-                      ? 'bg-blue-500'
-                      : 'bg-gray-300 dark:bg-gray-600'
-                  } relative`}
-                >
-                  <div
-                    className={`w-5 h-5 rounded-full bg-white shadow-sm transition-transform ${
-                      pref.enabled ? 'translate-x-6' : 'translate-x-0.5'
-                    } absolute top-0.5`}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+          </div> */}
       </div>
+
+      {/* Account Preferences */}
+      {/* <div className='bg-card rounded-xl p-6 border shadow-sm'>
+        <div className='flex items-center justify-between mb-6'>
+          <div>
+            <h3 className='text-lg font-semibold'>Account Preferences</h3>
+            <p className='text-muted-foreground text-sm'>
+              Manage your account settings
+            </p>
+          </div>
+          <button className='p-2 bg-muted hover:bg-muted/80 rounded-lg transition-colors'>
+            <Settings className='h-4 w-4' />
+          </button>
+        </div>
+        <div className='space-y-4'>
+          {preferences.map((pref, index) => (
+            <div
+              key={index}
+              className='flex items-center justify-between p-4 bg-muted/20 rounded-lg'
+            >
+              <div>
+                <p className='font-medium'>{pref.category}</p>
+                <p className='text-sm text-muted-foreground'>{pref.setting}</p>
+              </div>
+              <div
+                className={`w-12 h-6 rounded-full transition-colors ${
+                  pref.enabled ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
+                } relative`}
+              >
+                <div
+                  className={`w-5 h-5 rounded-full bg-white shadow-sm transition-transform ${
+                    pref.enabled ? 'translate-x-6' : 'translate-x-0.5'
+                  } absolute top-0.5`}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div> */}
     </div>
   )
 }
