@@ -139,10 +139,21 @@ export default function UserAccount() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
-  } = useForm<FormFields>()
+  } = useForm<FormFields>({
+    defaultValues: {
+      email: 'test@email.com',
+    },
+  })
 
-  const onSubmit: SubmitHandler<FormFields> = data => {
+  const onSubmit: SubmitHandler<FormFields> = async data => {
+    try {
+      throw new Error()
+      console.log(data)
+    } catch (error) {
+      setError('root', { message: 'There was an error' })
+    }
     console.log(data)
   }
 
@@ -241,7 +252,12 @@ export default function UserAccount() {
           <input
             {...register('email', {
               required: 'Email is required',
-              validate: value => value.includes('@'),
+              validate: value => {
+                if (!value.includes('@')) {
+                  return 'Email must include @'
+                }
+                return true
+              },
             })}
             type='text'
             placeholder='Email'
@@ -252,7 +268,10 @@ export default function UserAccount() {
           <input
             {...register('password', {
               required: 'Password is required',
-              minLength: 5,
+              minLength: {
+                value: 5,
+                message: 'Password must have at least 5 characters',
+              },
             })}
             type='text'
             placeholder='Password'
@@ -261,6 +280,9 @@ export default function UserAccount() {
             <div className='text-red-500'>{errors.password.message}</div>
           )}
           <button type='submit'>Submit</button>
+          {errors.root && (
+            <div className='text-red-500'>{errors.root.message}</div>
+          )}
         </form>
       </div>
 
