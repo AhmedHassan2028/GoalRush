@@ -13,7 +13,16 @@ import {
   TrendingUp,
 } from 'lucide-react'
 
+// import { getUserInfo } from '@/lib/services/api'
+
+
 export default function UserAccount() {
+
+  // const [user, setUser] = useState(null)
+
+
+
+
   const userInfo = {
     name: 'Alex Johnson',
     email: 'alex.johnson@email.com',
