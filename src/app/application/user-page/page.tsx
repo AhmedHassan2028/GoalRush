@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useState } from 'react'
 import {
   Mail,
@@ -14,14 +16,15 @@ import {
 } from 'lucide-react'
 
 import { getUserInfo } from '@/lib/services/api'
+import { UserProfile } from '@/types/user'
 
 export default function UserAccount() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<UserProfile | null>(null)
 
   useEffect(() => {
     const loadUserInfo = async () => {
       try {
-        const user = await getUserInfo() //from api.ts
+        const user = await getUserInfo()
         setUser(user)
       } catch (error) {
         console.log('Unable to get user data due to: ', error)
@@ -33,11 +36,12 @@ export default function UserAccount() {
   }, [])
 
   const userInfo = {
-    name: 'Alex Johnson',
-    email: 'alex.johnson@email.com',
-    phone: '+1 (555) 123-4567',
-    location: 'San Francisco, CA',
-    joinDate: 'March 2023',
+    // name: 'Alex Johnson',
+    email: user?.firstName,
+    // phone: '+1 (555) 123-4567',
+    fullName: `${user?.firstName} ${user?.lastName}`,
+    // location: 'San Francisco, CA',
+    createdAt: user?.createdAt,
     avatar: '/api/placeholder/100/100',
     role: 'Premium Member',
     verified: true,
@@ -152,7 +156,7 @@ export default function UserAccount() {
 
           <div className='flex-1 space-y-3'>
             <div className='flex items-center gap-3'>
-              <h2 className='text-2xl font-bold'>{userInfo.name}</h2>
+              <h2 className='text-2xl font-bold'>{user?.fullName}</h2>
               {/* {userInfo.verified && (
                 <div className='flex items-center gap-1 px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full text-xs font-medium'>
                   <Shield className='h-3 w-3' />
@@ -179,7 +183,7 @@ export default function UserAccount() {
               </div> */}
               <div className='flex items-center gap-2 text-muted-foreground'>
                 <Calendar className='h-4 w-4' />
-                Member since {userInfo.joinDate}
+                Member since {userInfo.createdAt}
               </div>
             </div>
           </div>

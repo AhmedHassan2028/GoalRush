@@ -5,4 +5,5 @@ export interface UserProfile {
   lastName?: string
   createdAt: string
   updatedAt?: string
+  fullName?: string
 }
