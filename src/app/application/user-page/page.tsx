@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Mail,
   // Phone,
@@ -13,15 +13,24 @@ import {
   TrendingUp,
 } from 'lucide-react'
 
-// import { getUserInfo } from '@/lib/services/api'
-
+import { getUserInfo } from '@/lib/services/api'
 
 export default function UserAccount() {
+  const [user, setUser] = useState(null)
 
-  // const [user, setUser] = useState(null)
-
-
-
+  useEffect(() => {
+    const loadUserInfo = async () => {
+      try {
+        const user = await getUserInfo() //from api.ts
+        setUser(user)
+      } catch (error) {
+        console.log('Unable to get user data due to: ', error)
+      } finally {
+        console.log('User info loaded')
+      }
+    }
+    loadUserInfo()
+  }, [])
 
   const userInfo = {
     name: 'Alex Johnson',
