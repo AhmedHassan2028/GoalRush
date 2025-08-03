@@ -17,6 +17,7 @@ import {
 
 import { getUserInfo } from '@/lib/services/api'
 import { UserProfile } from '@/types/user'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 export default function UserAccount() {
   const [user, setUser] = useState<UserProfile | null>(null)
@@ -130,6 +131,21 @@ export default function UserAccount() {
   //   { category: 'Marketing', setting: 'Promotional emails', enabled: false },
   // ]
 
+  type FormFields = {
+    email: string
+    password: string
+  }
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormFields>()
+
+  const onSubmit: SubmitHandler<FormFields> = data => {
+    console.log(data)
+  }
+
   return (
     <div className='space-y-8'>
       {/* Header */}
@@ -218,6 +234,34 @@ export default function UserAccount() {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className='bg-card rounded-xl p-6 border shadow-sm'>
+        <form className='tutorial gap-2' onSubmit={handleSubmit(onSubmit)}>
+          <input
+            {...register('email', {
+              required: 'Email is required',
+              validate: value => value.includes('@'),
+            })}
+            type='text'
+            placeholder='Email'
+          />
+          {errors.email && (
+            <div className='text-red-500'>{errors.email.message}</div>
+          )}
+          <input
+            {...register('password', {
+              required: 'Password is required',
+              minLength: 5,
+            })}
+            type='text'
+            placeholder='Password'
+          />
+          {errors.password && (
+            <div className='text-red-500'>{errors.password.message}</div>
+          )}
+          <button type='submit'>Submit</button>
+        </form>
       </div>
 
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
