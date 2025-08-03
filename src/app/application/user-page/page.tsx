@@ -25,6 +25,7 @@ export default function UserAccount() {
     const loadUserInfo = async () => {
       try {
         const user = await getUserInfo()
+        console.log(user)
         setUser(user)
       } catch (error) {
         console.log('Unable to get user data due to: ', error)
@@ -37,14 +38,19 @@ export default function UserAccount() {
 
   const userInfo = {
     // name: 'Alex Johnson',
-    email: user?.firstName,
+    email: user?.email,
     // phone: '+1 (555) 123-4567',
     fullName: `${user?.firstName} ${user?.lastName}`,
     // location: 'San Francisco, CA',
-    createdAt: user?.createdAt,
+    createdAt: user?.createdAt
+      ? new Date(user.createdAt).toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+        })
+      : 'Unknown',
     avatar: '/api/placeholder/100/100',
-    role: 'Premium Member',
-    verified: true,
+    // role: 'Premium Member',
+    // verified: true,
   }
 
   const accountStats = [
@@ -68,7 +74,7 @@ export default function UserAccount() {
     },
     {
       label: 'Account Creation date',
-      value: 'Access from firebase',
+      value: userInfo?.createdAt,
       icon: Clock,
       color: 'text-orange-600',
     },
@@ -156,7 +162,7 @@ export default function UserAccount() {
 
           <div className='flex-1 space-y-3'>
             <div className='flex items-center gap-3'>
-              <h2 className='text-2xl font-bold'>{user?.fullName}</h2>
+              <h2 className='text-2xl font-bold'>{userInfo?.fullName}</h2>
               {/* {userInfo.verified && (
                 <div className='flex items-center gap-1 px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full text-xs font-medium'>
                   <Shield className='h-3 w-3' />
@@ -171,7 +177,7 @@ export default function UserAccount() {
             <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm'>
               <div className='flex items-center gap-2 text-muted-foreground'>
                 <Mail className='h-4 w-4' />
-                {userInfo.email}
+                {userInfo?.email}
               </div>
               {/* <div className='flex items-center gap-2 text-muted-foreground'>
                 <Phone className='h-4 w-4' />
@@ -182,8 +188,8 @@ export default function UserAccount() {
                 {userInfo.location}
               </div> */}
               <div className='flex items-center gap-2 text-muted-foreground'>
-                <Calendar className='h-4 w-4' />
-                Member since {userInfo.createdAt}
+                {/* <Calendar className='h-4 w-4' /> */}
+                {/* Member since {userInfo?.createdAt} */}
               </div>
             </div>
           </div>
