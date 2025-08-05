@@ -1,8 +1,8 @@
 import React from 'react'
 import {
   Mail,
-  Phone,
-  MapPin,
+  // Phone,
+  // MapPin,
   Calendar,
   Shield,
   // Settings,
@@ -159,7 +159,7 @@ export default async function UserAccount() {
                 <Mail className='h-4 w-4' />
                 {userInfo.email}
               </div>
-              <div className='flex items-center gap-2 text-muted-foreground'>
+              {/* <div className='flex items-center gap-2 text-muted-foreground'>
                 <Phone className='h-4 w-4' />
                 {userInfo.phone}
               </div>
@@ -170,7 +170,7 @@ export default async function UserAccount() {
               <div className='flex items-center gap-2 text-muted-foreground'>
                 <Calendar className='h-4 w-4' />
                 Member since {userInfo.joinDate}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
