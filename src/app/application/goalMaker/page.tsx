@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/popover'
 import { CalendarIcon } from '@radix-ui/react-icons'
 import { format } from 'date-fns'
+import { GoalInfo } from '@/types/goal'
 
 const formSchema = z.object({
   title: z.string().min(2, 'Title must be at least 2 characters'),
@@ -42,14 +43,12 @@ export function SimpleForm() {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // console.log(values)
-    // const { title, deadline } = values
-    // try {
-    //    await addNewGoal(title, deadline)
-    // } catch (error) {
-    // }
-    // Handle form submission here
-    console.log(values)
+    const { title, deadline } = values
+    const userGoal: GoalInfo = {
+      title,
+      deadline,
+    }
+    console.log(userGoal)
   }
 
   return (
