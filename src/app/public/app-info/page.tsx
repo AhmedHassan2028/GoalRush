@@ -68,7 +68,7 @@ export default function AppInfo() {
     { name: 'Tailwind CSS', description: 'Utility-first CSS framework' },
     { name: 'Clerk', description: 'Authentication & user management' },
     { name: 'Vercel', description: 'Deployment platform' },
-    { name: 'Prisma', description: 'Database toolkit' },
+    { name: 'Firestore', description: 'Database' },
   ]
 
   return (
