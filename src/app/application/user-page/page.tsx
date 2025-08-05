@@ -5,7 +5,7 @@ import {
   MapPin,
   Calendar,
   Shield,
-  Settings,
+  // Settings,
   Edit,
   Camera,
   Award,
@@ -35,20 +35,20 @@ export default async function UserAccount() {
 
   const accountStats = [
     {
-      label: 'Profile Views',
-      value: '2,847',
+      label: 'Friends',
+      value: '0',
       icon: TrendingUp,
       color: 'text-blue-600',
     },
     {
-      label: 'Total Orders',
-      value: '34',
+      label: 'Goals completed',
+      value: '0',
       icon: Calendar,
       color: 'text-green-600',
     },
     {
-      label: 'Loyalty Points',
-      value: '1,256',
+      label: 'Goals created',
+      value: '0',
       icon: Award,
       color: 'text-purple-600',
     },
@@ -60,55 +60,55 @@ export default async function UserAccount() {
     },
   ]
 
-  const recentOrders = [
-    {
-      id: 'ORD-001',
-      item: 'Premium Subscription',
-      date: '2024-01-15',
-      status: 'Active',
-      amount: '$29.99',
-    },
-    {
-      id: 'ORD-002',
-      item: 'Mobile App Pro',
-      date: '2024-01-10',
-      status: 'Completed',
-      amount: '$19.99',
-    },
-    {
-      id: 'ORD-003',
-      item: 'Cloud Storage 1TB',
-      date: '2024-01-05',
-      status: 'Active',
-      amount: '$9.99',
-    },
-    {
-      id: 'ORD-004',
-      item: 'API Access Plan',
-      date: '2023-12-28',
-      status: 'Expired',
-      amount: '$49.99',
-    },
-  ]
+  // const recentOrders = [
+  //   {
+  //     id: 'ORD-001',
+  //     item: 'Premium Subscription',
+  //     date: '2024-01-15',
+  //     status: 'Active',
+  //     amount: '$29.99',
+  //   },
+  //   {
+  //     id: 'ORD-002',
+  //     item: 'Mobile App Pro',
+  //     date: '2024-01-10',
+  //     status: 'Completed',
+  //     amount: '$19.99',
+  //   },
+  //   {
+  //     id: 'ORD-003',
+  //     item: 'Cloud Storage 1TB',
+  //     date: '2024-01-05',
+  //     status: 'Active',
+  //     amount: '$9.99',
+  //   },
+  //   {
+  //     id: 'ORD-004',
+  //     item: 'API Access Plan',
+  //     date: '2023-12-28',
+  //     status: 'Expired',
+  //     amount: '$49.99',
+  //   },
+  // ]
 
-  const preferences = [
-    {
-      category: 'Notifications',
-      setting: 'Email notifications enabled',
-      enabled: true,
-    },
-    {
-      category: 'Privacy',
-      setting: 'Profile visibility: Public',
-      enabled: true,
-    },
-    {
-      category: 'Security',
-      setting: 'Two-factor authentication',
-      enabled: true,
-    },
-    { category: 'Marketing', setting: 'Promotional emails', enabled: false },
-  ]
+  // const preferences = [
+  //   {
+  //     category: 'Notifications',
+  //     setting: 'Email notifications enabled',
+  //     enabled: true,
+  //   },
+  //   {
+  //     category: 'Privacy',
+  //     setting: 'Profile visibility: Public',
+  //     enabled: true,
+  //   },
+  //   {
+  //     category: 'Security',
+  //     setting: 'Two-factor authentication',
+  //     enabled: true,
+  //   },
+  //   { category: 'Marketing', setting: 'Promotional emails', enabled: false },
+  // ]
 
   return (
     <div className='space-y-8'>
@@ -202,7 +202,7 @@ export default async function UserAccount() {
 
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
         {/* Recent Orders */}
-        <div className='bg-card rounded-xl p-6 border shadow-sm'>
+        {/* <div className='bg-card rounded-xl p-6 border shadow-sm'>
           <div className='flex items-center justify-between mb-6'>
             <div>
               <h3 className='text-lg font-semibold'>Recent Orders</h3>
@@ -243,10 +243,10 @@ export default async function UserAccount() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
 
         {/* Account Preferences */}
-        <div className='bg-card rounded-xl p-6 border shadow-sm'>
+        {/* <div className='bg-card rounded-xl p-6 border shadow-sm'>
           <div className='flex items-center justify-between mb-6'>
             <div>
               <h3 className='text-lg font-semibold'>Account Preferences</h3>
@@ -286,7 +286,7 @@ export default async function UserAccount() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )
