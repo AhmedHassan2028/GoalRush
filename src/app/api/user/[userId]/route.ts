@@ -1,17 +1,17 @@
-import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/firebaseAdmin'
+import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET(request: NextRequest) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { userId: string } }
+) {
   try {
-    // Extract the userId from query parameters
-    const searchParams = request.nextUrl.searchParams
-    const userId = searchParams.get('userId')
+    const userId = params.userId
 
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // Using Admin SDK
     const userDoc = await db.doc(`users/${userId}`).get()
 
     if (!userDoc.exists) {
