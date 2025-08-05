@@ -53,8 +53,8 @@ export default async function UserAccount() {
       color: 'text-purple-600',
     },
     {
-      label: 'Account Age',
-      value: '1.5 years',
+      label: 'Account Creation Date',
+      value: 'From firebase',
       icon: Clock,
       color: 'text-orange-600',
     },
