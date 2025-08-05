@@ -29,7 +29,7 @@ export default async function UserAccount() {
     location: 'San Francisco, CA',
     joinDate: 'March 2023',
     avatar: '/api/placeholder/100/100',
-    role: 'Premium Member',
+    // role: 'Premium Member',
     verified: true,
   }
 
@@ -149,9 +149,9 @@ export default async function UserAccount() {
                   Verified
                 </div>
               )}
-              <span className='px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 rounded-full text-sm font-medium'>
+              {/* <span className='px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 rounded-full text-sm font-medium'>
                 {userInfo.role}
-              </span>
+              </span> */}
             </div>
 
             <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm'>
