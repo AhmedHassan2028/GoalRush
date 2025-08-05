@@ -23,6 +23,8 @@ import {
 import { CalendarIcon } from '@radix-ui/react-icons'
 import { format } from 'date-fns'
 import { Goal } from '@/types/goal'
+import { useUser } from '@clerk/nextjs'
+import { postGoal } from '@/lib/services/goalServices'
 
 const formSchema = z.object({
   title: z.string().min(2, 'Title must be at least 2 characters'),
@@ -42,13 +44,24 @@ export function SimpleForm() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const { user } = useUser()
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const { title, deadline } = values
     const userGoal: Goal = {
       title,
       deadline,
     }
     console.log(userGoal)
+
+    try {
+      if (!user?.id) {
+        return
+      }
+      await postGoal(user.id, userGoal)
+    } catch (error) {
+      console.log('Failed to create goal: ', error)
+    }
   }
 
   return (
