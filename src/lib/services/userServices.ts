@@ -1,11 +1,10 @@
-import { auth } from '@clerk/nextjs/server'
 import { apiClient } from './apiClient'
 import { UserProfile } from '@/types/user'
 
-export const fetchUserProfile = async (): Promise<UserProfile> => {
+export const fetchUserProfile = async (
+  userId: string
+): Promise<UserProfile> => {
   try {
-    const { userId } = await auth()
-
     if (!userId) {
       throw new Error('Unauthorized')
     }

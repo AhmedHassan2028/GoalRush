@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect, useState } from 'react'
 import {
   Mail,
   // Phone,
@@ -13,21 +15,49 @@ import {
   TrendingUp,
 } from 'lucide-react'
 import { fetchUserProfile } from '@/lib/services/userServices'
+import { UserProfile } from '@/types'
+import { useUser } from '@clerk/nextjs'
 
-export default async function UserAccount() {
-  try {
-    const user = await fetchUserProfile()
-    console.log('user = ', user)
-  } catch (error) {
-    console.log(error)
+export default function UserAccount() {
+  const [userProfile, setuserProfile] = useState<UserProfile | null>(null)
+  const { user, isLoaded } = useUser()
+
+  useEffect(() => {
+    const loadUserProfile = async () => {
+      if (!user?.id) {
+        return
+      }
+      try {
+        const userProfile: UserProfile = await fetchUserProfile(user.id)
+        console.log('User Profile:', userProfile)
+        if (!userProfile) {
+          throw new Error('User profile not found')
+        }
+        setuserProfile(userProfile)
+      } catch (error) {
+        console.error('Error fetching popular movies:', error)
+      } finally {
+        console.log('Popular movies loaded')
+      }
+    }
+    if (isLoaded) {
+      loadUserProfile()
+    }
+  }, [user?.id, isLoaded])
+
+  if (!isLoaded) {
+    return (
+      <div className='min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 dark:from-slate-900 dark:via-teal-900 dark:to-cyan-900 flex items-center justify-center'>
+        <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-emerald-600'></div>
+      </div>
+    )
   }
-
   const userInfo = {
-    name: 'Alex Johnson',
-    email: 'alex.johnson@email.com',
-    phone: '+1 (555) 123-4567',
-    location: 'San Francisco, CA',
-    joinDate: 'March 2023',
+    fullName: userProfile?.firstName + ' ' + userProfile?.lastName,
+    email: userProfile?.email,
+    // phone: '+1 (555) 123-4567',
+    // location: 'San Francisco, CA',
+    joinDate: userProfile?.createdAt,
     avatar: '/api/placeholder/100/100',
     // role: 'Premium Member',
     verified: true,
@@ -41,20 +71,20 @@ export default async function UserAccount() {
       color: 'text-blue-600',
     },
     {
-      label: 'Goals completed',
+      label: 'Goals created',
       value: '0',
       icon: Calendar,
       color: 'text-green-600',
     },
     {
-      label: 'Goals created',
+      label: 'Goals completed',
       value: '0',
       icon: Award,
       color: 'text-purple-600',
     },
     {
       label: 'Account Creation Date',
-      value: 'From firebase',
+      value: userProfile?.createdAt,
       icon: Clock,
       color: 'text-orange-600',
     },
@@ -142,7 +172,7 @@ export default async function UserAccount() {
 
           <div className='flex-1 space-y-3'>
             <div className='flex items-center gap-3'>
-              <h2 className='text-2xl font-bold'>{userInfo.name}</h2>
+              <h2 className='text-2xl font-bold'>{userInfo.fullName}</h2>
               {userInfo.verified && (
                 <div className='flex items-center gap-1 px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full text-xs font-medium'>
                   <Shield className='h-3 w-3' />
