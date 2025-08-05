@@ -11,7 +11,7 @@ export const fetchUserProfile = async (
 
     // For server components, Clerk automatically passes the auth token
     // to your API routes when using same-origin requests
-    return await apiClient.get<UserProfile>(`user?userId=${userId}`, {
+    return await apiClient.GET<UserProfile>(`user?userId=${userId}`, {
       cache: 'no-store',
     })
   } catch (error) {

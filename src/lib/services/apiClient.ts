@@ -12,7 +12,7 @@ type RequestOptions = {
 }
 
 export const apiClient = {
-  get: async <T>(path: string, options?: RequestOptions): Promise<T> => {
+  GET: async <T>(path: string, options?: RequestOptions): Promise<T> => {
     const url = buildApiUrl(path)
     const headers = {
       ...options?.headers,
@@ -27,7 +27,7 @@ export const apiClient = {
     return response.data
   },
 
-  post: async <T>(
+  POST: async <T>(
     path: string,
     body: unknown,
     options?: RequestOptions
@@ -47,7 +47,7 @@ export const apiClient = {
     return response.data
   },
   // Add other methods as needed
-  put: async <T>(
+  PUT: async <T>(
     path: string,
     body: unknown,
     options?: RequestOptions
@@ -66,7 +66,7 @@ export const apiClient = {
 
     return response.data
   },
-  patch: async <T>(
+  PATCH: async <T>(
     path: string,
     body: unknown,
     options?: RequestOptions
@@ -85,7 +85,7 @@ export const apiClient = {
 
     return response.data
   },
-  delete: async <T>(path: string, options?: RequestOptions): Promise<T> => {
+  DELETE: async <T>(path: string, options?: RequestOptions): Promise<T> => {
     const url = buildApiUrl(path)
     const headers = {
       ...options?.headers,

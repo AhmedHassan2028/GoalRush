@@ -1,32 +1,28 @@
-/* eslint-disable prettier/prettier */
-import { currentUser } from '@clerk/nextjs/server'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
+import { db } from '@/lib/firebaseAdmin'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const user = await currentUser()
+    // Extract the userId from query parameters
+    const searchParams = request.nextUrl.searchParams
+    const userId = searchParams.get('userId')
 
-    if (!user) {
-      return NextResponse.json(
-        { error: 'User not authenticated' },
-        { status: 401 }
-      )
+    if (!userId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { firstName, lastName, createdAt, fullName, emailAddresses } = user
-    const email = emailAddresses && emailAddresses.length > 0 ? emailAddresses[0].emailAddress : null
+    // Using Admin SDK
+    const userDoc = await db.doc(`users/${userId}`).get()
 
-    return NextResponse.json({
-      firstName,
-      lastName,
-      email,
-      createdAt,
-      fullName
-    })
+    if (!userDoc.exists) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 })
+    }
+
+    return NextResponse.json(userDoc.data())
   } catch (error) {
     console.error('Error fetching user:', error)
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: 'Internal server error' },
       { status: 500 }
     )
   }
