@@ -1,161 +1,114 @@
-'use client'
-
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
   Mail,
-  // Phone,
-  // MapPin,
+  Phone,
+  MapPin,
   Calendar,
-  // Shield,
-  // Settings,
-  // Edit,
+  Shield,
+  Settings,
+  Edit,
   Camera,
   Award,
   Clock,
   TrendingUp,
 } from 'lucide-react'
+import { fetchUserProfile } from '@/lib/services/userServices'
 
-import { getUserInfo } from '@/lib/services/api'
-import { UserProfile } from '@/types/user'
-import { SubmitHandler, useForm } from 'react-hook-form'
-
-export default function UserAccount() {
-  const [user, setUser] = useState<UserProfile | null>(null)
-
-  useEffect(() => {
-    const loadUserInfo = async () => {
-      try {
-        const user = await getUserInfo()
-        console.log(user)
-        setUser(user)
-      } catch (error) {
-        console.log('Unable to get user data due to: ', error)
-      } finally {
-        console.log('User info loaded')
-      }
-    }
-    loadUserInfo()
-  }, [])
+export default async function UserAccount() {
+  try {
+    const user = await fetchUserProfile()
+    console.log('user = ', user)
+  } catch (error) {
+    console.log(error)
+  }
 
   const userInfo = {
-    // name: 'Alex Johnson',
-    email: user?.email,
-    // phone: '+1 (555) 123-4567',
-    fullName: `${user?.firstName} ${user?.lastName}`,
-    // location: 'San Francisco, CA',
-    createdAt: user?.createdAt
-      ? new Date(user.createdAt).toLocaleDateString('en-US', {
-          month: 'short',
-          day: 'numeric',
-        })
-      : 'Unknown',
+    name: 'Alex Johnson',
+    email: 'alex.johnson@email.com',
+    phone: '+1 (555) 123-4567',
+    location: 'San Francisco, CA',
+    joinDate: 'March 2023',
     avatar: '/api/placeholder/100/100',
-    // role: 'Premium Member',
-    // verified: true,
+    role: 'Premium Member',
+    verified: true,
   }
 
   const accountStats = [
     {
-      label: 'Friends',
-      value: '0',
+      label: 'Profile Views',
+      value: '2,847',
       icon: TrendingUp,
       color: 'text-blue-600',
     },
     {
-      label: 'Total Goals Created',
-      value: '0',
+      label: 'Total Orders',
+      value: '34',
       icon: Calendar,
       color: 'text-green-600',
     },
     {
-      label: 'Goals completed',
-      value: '0',
+      label: 'Loyalty Points',
+      value: '1,256',
       icon: Award,
       color: 'text-purple-600',
     },
     {
-      label: 'Account Creation date',
-      value: userInfo?.createdAt,
+      label: 'Account Age',
+      value: '1.5 years',
       icon: Clock,
       color: 'text-orange-600',
     },
   ]
 
-  // const recentGoals = [
-  //   {
-  //     id: 'ORD-001',
-  //     item: 'Premium Subscription',
-  //     date: '2024-01-15',
-  //     status: 'Active',
-  //     amount: '$29.99',
-  //   },
-  //   {
-  //     id: 'ORD-002',
-  //     item: 'Mobile App Pro',
-  //     date: '2024-01-10',
-  //     status: 'Completed',
-  //     amount: '$19.99',
-  //   },
-  //   {
-  //     id: 'ORD-003',
-  //     item: 'Cloud Storage 1TB',
-  //     date: '2024-01-05',
-  //     status: 'Active',
-  //     amount: '$9.99',
-  //   },
-  //   {
-  //     id: 'ORD-004',
-  //     item: 'API Access Plan',
-  //     date: '2023-12-28',
-  //     status: 'Expired',
-  //     amount: '$49.99',
-  //   },
-  // ]
-
-  // const preferences = [
-  //   {
-  //     category: 'Notifications',
-  //     setting: 'Email notifications enabled',
-  //     enabled: true,
-  //   },
-  //   {
-  //     category: 'Privacy',
-  //     setting: 'Profile visibility: Public',
-  //     enabled: true,
-  //   },
-  //   {
-  //     category: 'Security',
-  //     setting: 'Two-factor authentication',
-  //     enabled: true,
-  //   },
-  //   { category: 'Marketing', setting: 'Promotional emails', enabled: false },
-  // ]
-
-  type FormFields = {
-    email: string
-    password: string
-  }
-
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors },
-  } = useForm<FormFields>({
-    defaultValues: {
-      email: 'test@email.com',
+  const recentOrders = [
+    {
+      id: 'ORD-001',
+      item: 'Premium Subscription',
+      date: '2024-01-15',
+      status: 'Active',
+      amount: '$29.99',
     },
-  })
+    {
+      id: 'ORD-002',
+      item: 'Mobile App Pro',
+      date: '2024-01-10',
+      status: 'Completed',
+      amount: '$19.99',
+    },
+    {
+      id: 'ORD-003',
+      item: 'Cloud Storage 1TB',
+      date: '2024-01-05',
+      status: 'Active',
+      amount: '$9.99',
+    },
+    {
+      id: 'ORD-004',
+      item: 'API Access Plan',
+      date: '2023-12-28',
+      status: 'Expired',
+      amount: '$49.99',
+    },
+  ]
 
-  const onSubmit: SubmitHandler<FormFields> = async data => {
-    try {
-      throw new Error()
-      console.log(data)
-    } catch (error) {
-      setError('root', { message: 'There was an error' })
-    }
-    console.log(data)
-  }
+  const preferences = [
+    {
+      category: 'Notifications',
+      setting: 'Email notifications enabled',
+      enabled: true,
+    },
+    {
+      category: 'Privacy',
+      setting: 'Profile visibility: Public',
+      enabled: true,
+    },
+    {
+      category: 'Security',
+      setting: 'Two-factor authentication',
+      enabled: true,
+    },
+    { category: 'Marketing', setting: 'Promotional emails', enabled: false },
+  ]
 
   return (
     <div className='space-y-8'>
@@ -169,10 +122,10 @@ export default function UserAccount() {
             Manage your account settings and preferences
           </p>
         </div>
-        {/* <button className='flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors'>
+        <button className='flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors'>
           <Edit className='h-4 w-4' />
           Edit Profile
-        </button> */}
+        </button>
       </div>
 
       {/* User Info Card */}
@@ -189,34 +142,34 @@ export default function UserAccount() {
 
           <div className='flex-1 space-y-3'>
             <div className='flex items-center gap-3'>
-              <h2 className='text-2xl font-bold'>{userInfo?.fullName}</h2>
-              {/* {userInfo.verified && (
+              <h2 className='text-2xl font-bold'>{userInfo.name}</h2>
+              {userInfo.verified && (
                 <div className='flex items-center gap-1 px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full text-xs font-medium'>
                   <Shield className='h-3 w-3' />
                   Verified
                 </div>
-              )} */}
-              {/* <span className='px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 rounded-full text-sm font-medium'>
+              )}
+              <span className='px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 rounded-full text-sm font-medium'>
                 {userInfo.role}
-              </span> */}
+              </span>
             </div>
 
             <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm'>
               <div className='flex items-center gap-2 text-muted-foreground'>
                 <Mail className='h-4 w-4' />
-                {userInfo?.email}
+                {userInfo.email}
               </div>
-              {/* <div className='flex items-center gap-2 text-muted-foreground'>
+              <div className='flex items-center gap-2 text-muted-foreground'>
                 <Phone className='h-4 w-4' />
                 {userInfo.phone}
-              </div> */}
-              {/* <div className='flex items-center gap-2 text-muted-foreground'>
+              </div>
+              <div className='flex items-center gap-2 text-muted-foreground'>
                 <MapPin className='h-4 w-4' />
                 {userInfo.location}
-              </div> */}
+              </div>
               <div className='flex items-center gap-2 text-muted-foreground'>
-                {/* <Calendar className='h-4 w-4' /> */}
-                {/* Member since {userInfo?.createdAt} */}
+                <Calendar className='h-4 w-4' />
+                Member since {userInfo.joinDate}
               </div>
             </div>
           </div>
@@ -247,53 +200,14 @@ export default function UserAccount() {
         ))}
       </div>
 
-      <div className='bg-card rounded-xl p-6 border shadow-sm'>
-        <form className='tutorial gap-2' onSubmit={handleSubmit(onSubmit)}>
-          <input
-            {...register('email', {
-              required: 'Email is required',
-              validate: value => {
-                if (!value.includes('@')) {
-                  return 'Email must include @'
-                }
-                return true
-              },
-            })}
-            type='text'
-            placeholder='Email'
-          />
-          {errors.email && (
-            <div className='text-red-500'>{errors.email.message}</div>
-          )}
-          <input
-            {...register('password', {
-              required: 'Password is required',
-              minLength: {
-                value: 5,
-                message: 'Password must have at least 5 characters',
-              },
-            })}
-            type='text'
-            placeholder='Password'
-          />
-          {errors.password && (
-            <div className='text-red-500'>{errors.password.message}</div>
-          )}
-          <button type='submit'>Submit</button>
-          {errors.root && (
-            <div className='text-red-500'>{errors.root.message}</div>
-          )}
-        </form>
-      </div>
-
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
         {/* Recent Orders */}
-        {/* <div className='bg-card rounded-xl p-6 border shadow-sm'>
+        <div className='bg-card rounded-xl p-6 border shadow-sm'>
           <div className='flex items-center justify-between mb-6'>
             <div>
-              <h3 className='text-lg font-semibold'>Recent Goals</h3>
+              <h3 className='text-lg font-semibold'>Recent Orders</h3>
               <p className='text-muted-foreground text-sm'>
-                Your latest goals and activity
+                Your latest purchases and subscriptions
               </p>
             </div>
             <button className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium'>
@@ -301,7 +215,7 @@ export default function UserAccount() {
             </button>
           </div>
           <div className='space-y-4'>
-            {recentGoals.map(order => (
+            {recentOrders.map(order => (
               <div
                 key={order.id}
                 className='flex items-center justify-between p-4 bg-muted/20 rounded-lg hover:bg-muted/30 transition-colors'
@@ -328,47 +242,52 @@ export default function UserAccount() {
                 <span className='font-semibold'>{order.amount}</span>
               </div>
             ))}
-          </div> */}
-      </div>
-
-      {/* Account Preferences */}
-      {/* <div className='bg-card rounded-xl p-6 border shadow-sm'>
-        <div className='flex items-center justify-between mb-6'>
-          <div>
-            <h3 className='text-lg font-semibold'>Account Preferences</h3>
-            <p className='text-muted-foreground text-sm'>
-              Manage your account settings
-            </p>
           </div>
-          <button className='p-2 bg-muted hover:bg-muted/80 rounded-lg transition-colors'>
-            <Settings className='h-4 w-4' />
-          </button>
         </div>
-        <div className='space-y-4'>
-          {preferences.map((pref, index) => (
-            <div
-              key={index}
-              className='flex items-center justify-between p-4 bg-muted/20 rounded-lg'
-            >
-              <div>
-                <p className='font-medium'>{pref.category}</p>
-                <p className='text-sm text-muted-foreground'>{pref.setting}</p>
-              </div>
-              <div
-                className={`w-12 h-6 rounded-full transition-colors ${
-                  pref.enabled ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
-                } relative`}
-              >
-                <div
-                  className={`w-5 h-5 rounded-full bg-white shadow-sm transition-transform ${
-                    pref.enabled ? 'translate-x-6' : 'translate-x-0.5'
-                  } absolute top-0.5`}
-                />
-              </div>
+
+        {/* Account Preferences */}
+        <div className='bg-card rounded-xl p-6 border shadow-sm'>
+          <div className='flex items-center justify-between mb-6'>
+            <div>
+              <h3 className='text-lg font-semibold'>Account Preferences</h3>
+              <p className='text-muted-foreground text-sm'>
+                Manage your account settings
+              </p>
             </div>
-          ))}
+            <button className='p-2 bg-muted hover:bg-muted/80 rounded-lg transition-colors'>
+              <Settings className='h-4 w-4' />
+            </button>
+          </div>
+          <div className='space-y-4'>
+            {preferences.map((pref, index) => (
+              <div
+                key={index}
+                className='flex items-center justify-between p-4 bg-muted/20 rounded-lg'
+              >
+                <div>
+                  <p className='font-medium'>{pref.category}</p>
+                  <p className='text-sm text-muted-foreground'>
+                    {pref.setting}
+                  </p>
+                </div>
+                <div
+                  className={`w-12 h-6 rounded-full transition-colors ${
+                    pref.enabled
+                      ? 'bg-blue-500'
+                      : 'bg-gray-300 dark:bg-gray-600'
+                  } relative`}
+                >
+                  <div
+                    className={`w-5 h-5 rounded-full bg-white shadow-sm transition-transform ${
+                      pref.enabled ? 'translate-x-6' : 'translate-x-0.5'
+                    } absolute top-0.5`}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div> */}
+      </div>
     </div>
   )
 }

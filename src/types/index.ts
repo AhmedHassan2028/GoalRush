@@ -1,1 +1,1 @@
-import * as UserTypes from '@/types/user'
+export * from './user'

@@ -42,8 +42,14 @@ export function SimpleForm() {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+    // console.log(values)
+    // const { title, deadline } = values
+    // try {
+    //    await addNewGoal(title, deadline)
+    // } catch (error) {
+    // }
     // Handle form submission here
+    console.log(values)
   }
 
   return (
