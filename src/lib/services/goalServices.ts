@@ -13,7 +13,7 @@ export const postGoal = async (userId: string, goal: Goal): Promise<Goal> => {
 
     console.log('Posting goal for user:', userId, 'Goal:', goal)
     const response = await apiClient.POST<Goal>(
-      `user/${userId}/goals`,
+      '/user/goals',
       { userId, goal },
       {
         cache: 'no-store',
