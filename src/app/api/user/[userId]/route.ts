@@ -3,8 +3,9 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  props: { params: Promise<{ userId: string }> }
 ) {
+  const params = await props.params
   try {
     const userId = params.userId
 

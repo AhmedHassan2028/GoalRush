@@ -17,7 +17,7 @@ import {
 import { fetchUserProfile } from '@/lib/services/userServices'
 import { UserProfile } from '@/types'
 import { useUser } from '@clerk/nextjs'
-import GoalMakerPage from '../goalMaker/page'
+import GoalForm from '../goalMaker/page'
 
 export default function UserAccount() {
   const [userProfile, setuserProfile] = useState<UserProfile | null>(null)
@@ -323,7 +323,7 @@ export default function UserAccount() {
     </div> */}
         </div>
       </div>
-      <GoalMakerPage />
+      <GoalForm />
     </>
   )
 }

@@ -119,7 +119,7 @@ function SimpleForm() {
   )
 }
 
-export default function GoalMakerPage() {
+export default function GoalForm() {
   return (
     <Card className='w-full max-w-md'>
       <CardHeader>
