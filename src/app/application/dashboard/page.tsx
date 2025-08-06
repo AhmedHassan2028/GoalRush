@@ -1,47 +1,51 @@
+'use client'
+
+import GoalForm from '@/components/ui/goalForm'
 import {
-  TrendingUp,
-  Users,
-  DollarSign,
-  Activity,
-  ArrowUpRight,
-  ArrowDownRight,
+  // TrendingUp,
+  // Users,
+  // DollarSign,
+  // Activity,
+  // ArrowUpRight,
+  // ArrowDownRight,
   BarChart3,
-  PieChart,
-  Calendar,
-  Bell,
+  // PieChart,
+  // Calendar,
+  // Bell,
 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 const UserDashboard = () => {
-  const stats = [
-    {
-      title: 'Total Revenue',
-      value: '$12,345',
-      change: '+12.5%',
-      trend: 'up',
-      icon: DollarSign,
-    },
-    {
-      title: 'Active Users',
-      value: '1,234',
-      change: '+8.2%',
-      trend: 'up',
-      icon: Users,
-    },
-    {
-      title: 'Conversion Rate',
-      value: '3.2%',
-      change: '-2.1%',
-      trend: 'down',
-      icon: TrendingUp,
-    },
-    {
-      title: 'Page Views',
-      value: '45,678',
-      change: '+15.3%',
-      trend: 'up',
-      icon: Activity,
-    },
-  ]
+  // const stats = [
+  //   {
+  //     title: 'Total Revenue',
+  //     value: '$12,345',
+  //     change: '+12.5%',
+  //     trend: 'up',
+  //     icon: DollarSign,
+  //   },
+  //   {
+  //     title: 'Active Users',
+  //     value: '1,234',
+  //     change: '+8.2%',
+  //     trend: 'up',
+  //     icon: Users,
+  //   },
+  //   {
+  //     title: 'Conversion Rate',
+  //     value: '3.2%',
+  //     change: '-2.1%',
+  //     trend: 'down',
+  //     icon: TrendingUp,
+  //   },
+  //   {
+  //     title: 'Page Views',
+  //     value: '45,678',
+  //     change: '+15.3%',
+  //     trend: 'up',
+  //     icon: Activity,
+  //   },
+  // ]
 
   const recentActivity = [
     {
@@ -81,6 +85,12 @@ const UserDashboard = () => {
     },
   ]
 
+  const router = useRouter()
+
+  const goalPage = () => {
+    router.push('/application/createGoal')
+  }
+
   return (
     <div className='space-y-6'>
       {/* Header */}
@@ -95,18 +105,21 @@ const UserDashboard = () => {
           </p>
         </div>
         <div className='flex items-center gap-3'>
-          <button className='flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors'>
-            <Calendar className='h-4 w-4' />
-            This Week
+          <button
+            className='flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors'
+            onClick={goalPage}
+          >
+            <BarChart3 className='h-4 w-4' />
+            Create Goal
           </button>
-          <button className='p-2 bg-muted hover:bg-muted/80 rounded-lg transition-colors'>
+          {/* <button className='p-2 bg-muted hover:bg-muted/80 rounded-lg transition-colors'>
             <Bell className='h-4 w-4' />
-          </button>
+          </button> */}
         </div>
       </div>
 
       {/* Stats Grid */}
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+      {/* <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
         {stats.map((stat, index) => (
           <div
             key={index}
@@ -137,12 +150,12 @@ const UserDashboard = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
 
       {/* Charts Section */}
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
         {/* Revenue Chart */}
-        <div className='bg-card rounded-xl p-6 border shadow-sm'>
+        {/* <div className='bg-card rounded-xl p-6 border shadow-sm'>
           <div className='flex items-center justify-between mb-6'>
             <div>
               <h3 className='text-lg font-semibold'>Revenue Overview</h3>
@@ -163,10 +176,10 @@ const UserDashboard = () => {
               </p>
             </div>
           </div>
-        </div>
+        {/* </div> */}
 
         {/* User Distribution */}
-        <div className='bg-card rounded-xl p-6 border shadow-sm'>
+        {/* <div className='bg-card rounded-xl p-6 border shadow-sm'>
           <div className='flex items-center justify-between mb-6'>
             <div>
               <h3 className='text-lg font-semibold'>User Distribution</h3>
@@ -185,8 +198,11 @@ const UserDashboard = () => {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
+
+      {/* Creating goal form */}
+      <GoalForm />
 
       {/* Recent Activity */}
       <div className='bg-card rounded-xl p-6 border shadow-sm'>
@@ -194,7 +210,7 @@ const UserDashboard = () => {
           <div>
             <h3 className='text-lg font-semibold'>Recent Activity</h3>
             <p className='text-muted-foreground text-sm'>
-              Latest user actions and system events
+              View your latest goals and access them
             </p>
           </div>
           <button className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium'>

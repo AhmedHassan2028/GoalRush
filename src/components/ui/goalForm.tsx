@@ -3,7 +3,13 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { Button } from '@/components/ui/button'
+import { format } from 'date-fns'
+
+import { useState } from 'react'
+import { useUser } from '@clerk/nextjs'
+import { postGoal } from '@/lib/services/goalServices'
+import { Goal } from '@/types/goal'
+
 import {
   Form,
   FormControl,
@@ -12,61 +18,71 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+
 import { Input } from '@/components/ui/input'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import { Calendar } from '@/components/ui/calendar'
+import { Button } from '@/components/ui/button'
+import { CalendarIcon } from '@radix-ui/react-icons'
 import {
   Popover,
-  PopoverContent,
   PopoverTrigger,
+  PopoverContent,
 } from '@/components/ui/popover'
-import { CalendarIcon } from '@radix-ui/react-icons'
-import { format } from 'date-fns'
-import { Goal } from '@/types/goal'
-import { useUser } from '@clerk/nextjs'
-import { postGoal } from '@/lib/services/goalServices'
+import { Calendar } from '@/components/ui/calendar'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
+// Zod schema
 const formSchema = z.object({
   title: z.string().min(2, 'Title must be at least 2 characters'),
-  deadline: z
-    .date()
-    .refine(val => val instanceof Date && !isNaN(val.getTime()), {
-      message: 'Deadline is required',
-    }),
+  description: z
+    .string()
+    .min(5, 'Description must be at least 5 characters')
+    .max(500),
+  goalType: z.enum(['time', 'count', 'simple'], {
+    error: 'Goal type is required',
+  }),
+  value: z.string().min(1, 'Value is required'),
+  deadline: z.date(),
 })
 
 function SimpleForm() {
+  const { user } = useUser()
+  const [goalType, setGoalType] = useState<string>('')
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: '',
+      description: '',
+      goalType: undefined,
+      value: '',
       deadline: undefined,
     },
   })
 
-  const { user } = useUser()
+  const valuePlaceholder = {
+    time: 'e.g., 50 hours',
+    count: 'e.g., 10 tasks',
+    simple: 'e.g., 1',
+  }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { title, deadline } = values
     const userGoal: Goal = {
-      title,
-      deadline,
+      ...values,
     }
-    console.log(userGoal)
 
     try {
-      if (!user?.id) {
-        return
-      }
+      if (!user?.id) return
       await postGoal(user.id, userGoal)
+      console.log('Goal created:', userGoal)
     } catch (error) {
-      console.log('Failed to create goal: ', error)
+      console.error('Failed to create goal:', error)
     }
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+        {/* Title */}
         <FormField
           control={form.control}
           name='title'
@@ -80,6 +96,81 @@ function SimpleForm() {
             </FormItem>
           )}
         />
+
+        {/* Description */}
+        <FormField
+          control={form.control}
+          name='description'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder='Brief description of your goal'
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Goal Type */}
+        <FormField
+          control={form.control}
+          name='goalType'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Goal Type</FormLabel>
+              <FormControl>
+                <select
+                  {...field}
+                  className='border rounded px-3 py-2 w-full'
+                  onChange={e => {
+                    field.onChange(e)
+                    setGoalType(e.target.value)
+                  }}
+                >
+                  <option value=''>Select goal type</option>
+                  <option value='time'>Time-based (e.g., 50 hours)</option>
+                  <option value='count'>
+                    Number of times (e.g., 10 tasks)
+                  </option>
+                  <option value='simple'>
+                    Just complete it (e.g., pass test)
+                  </option>
+                </select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Value */}
+        <FormField
+          control={form.control}
+          name='value'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Goal Value</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={
+                    goalType
+                      ? valuePlaceholder[
+                          goalType as keyof typeof valuePlaceholder
+                        ]
+                      : 'Enter value'
+                  }
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Deadline */}
         <FormField
           control={form.control}
           name='deadline'
@@ -90,7 +181,7 @@ function SimpleForm() {
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
-                      variant={'outline'}
+                      variant='outline'
                       className={!field.value ? 'text-muted-foreground' : ''}
                     >
                       {field.value ? format(field.value, 'PPP') : 'Pick a date'}
@@ -103,7 +194,7 @@ function SimpleForm() {
                     mode='single'
                     selected={field.value}
                     onSelect={field.onChange}
-                    autoFocus
+                    initialFocus
                   />
                 </PopoverContent>
               </Popover>
@@ -111,6 +202,8 @@ function SimpleForm() {
             </FormItem>
           )}
         />
+
+        {/* Submit */}
         <Button type='submit' className='w-full'>
           Create
         </Button>
@@ -121,9 +214,9 @@ function SimpleForm() {
 
 export default function GoalForm() {
   return (
-    <Card className='w-full max-w-md'>
+    <Card className='w-full'>
       <CardHeader>
-        <CardTitle className='text-center'>Create New Item</CardTitle>
+        <CardTitle className='text-center'>Create New Goal</CardTitle>
       </CardHeader>
       <CardContent>
         <SimpleForm />
