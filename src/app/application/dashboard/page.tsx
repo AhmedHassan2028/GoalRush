@@ -1,6 +1,6 @@
 'use client'
 
-import GoalForm from '@/components/ui/goalForm'
+// import GoalForm from '@/components/ui/goalForm'
 import {
   // TrendingUp,
   // Users,
@@ -85,6 +85,7 @@ const UserDashboard = () => {
     },
   ]
 
+  //The upcoming 5 lines link you to different routes of your application, that function is called for the onclick of the button
   const router = useRouter()
 
   const goalPage = () => {
@@ -100,7 +101,7 @@ const UserDashboard = () => {
             Dashboard Overview
           </h1>
           <p className='text-muted-foreground mt-1'>
-            Welcome back! Here&apos;s what&apos;s happening with your business
+            Welcome back! Here&apos;s what&apos;s happening with your goals
             today.
           </p>
         </div>
@@ -202,7 +203,7 @@ const UserDashboard = () => {
       </div>
 
       {/* Creating goal form */}
-      <GoalForm />
+      {/* <GoalForm /> */}
 
       {/* Recent Activity */}
       <div className='bg-card rounded-xl p-6 border shadow-sm'>

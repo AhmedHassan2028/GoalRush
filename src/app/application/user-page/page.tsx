@@ -17,7 +17,7 @@ import {
 import { fetchUserProfile } from '@/lib/services/userServices'
 import { UserProfile } from '@/types'
 import { useUser } from '@clerk/nextjs'
-import GoalForm from '../createGoal/page'
+// import GoalForm from '../createGoal/page'
 
 export default function UserAccount() {
   const [userProfile, setuserProfile] = useState<UserProfile | null>(null)
@@ -323,7 +323,7 @@ export default function UserAccount() {
     </div> */}
         </div>
       </div>
-      <GoalForm />
+      {/* <GoalForm /> */}
     </>
   )
 }
