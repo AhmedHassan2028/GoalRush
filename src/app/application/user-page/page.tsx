@@ -53,6 +53,7 @@ export default function UserAccount() {
       </div>
     )
   }
+
   const userInfo = {
     fullName: userProfile?.firstName + ' ' + userProfile?.lastName,
     email: userProfile?.email,
