@@ -1,3 +1,5 @@
+import { Goal } from '.'
+
 export interface UserProfile {
   id: string
   email: string
@@ -6,4 +8,5 @@ export interface UserProfile {
   createdAt: string
   updatedAt?: string
   fullName?: string
+  goals?: Goal[]
 }

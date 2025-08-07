@@ -74,6 +74,7 @@ function SimpleForm() {
       if (!user?.id) return
       await postGoal(user.id, userGoal)
       console.log('Goal created:', userGoal)
+      alert('Goal created')
     } catch (error) {
       console.error('Failed to create goal:', error)
     }
@@ -194,7 +195,7 @@ function SimpleForm() {
                     mode='single'
                     selected={field.value}
                     onSelect={field.onChange}
-                    initialFocus
+                    autoFocus
                   />
                 </PopoverContent>
               </Popover>

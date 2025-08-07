@@ -52,35 +52,35 @@ const UserDashboard = () => {
       id: 1,
       action: 'New user registration',
       user: 'John Doe',
-      time: '2 minutes ago',
+      created: '2 minutes ago',
       type: 'user',
     },
     {
       id: 2,
       action: 'Payment received',
       user: 'Sarah Smith',
-      time: '5 minutes ago',
+      created: '5 minutes ago',
       type: 'payment',
     },
     {
       id: 3,
       action: 'Support ticket created',
       user: 'Mike Johnson',
-      time: '12 minutes ago',
+      created: '12 minutes ago',
       type: 'support',
     },
     {
       id: 4,
       action: 'Product viewed',
       user: 'Emma Wilson',
-      time: '18 minutes ago',
+      created: '18 minutes ago',
       type: 'activity',
     },
     {
       id: 5,
       action: 'Account upgraded',
       user: 'David Brown',
-      time: '25 minutes ago',
+      created: '25 minutes ago',
       type: 'upgrade',
     },
   ]
@@ -242,7 +242,7 @@ const UserDashboard = () => {
                 <p className='text-sm text-muted-foreground'>{activity.user}</p>
               </div>
               <span className='text-sm text-muted-foreground'>
-                {activity.time}
+                {activity.created}
               </span>
             </div>
           ))}

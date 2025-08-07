@@ -74,7 +74,7 @@ export default function UserAccount() {
     },
     {
       label: 'Goals created',
-      value: '0',
+      value: 0,
       icon: Calendar,
       color: 'text-green-600',
     },
