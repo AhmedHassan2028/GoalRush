@@ -34,9 +34,7 @@ export default function UserAccount() {
         const userProfile: UserProfile = await fetchUserProfile(user.id)
         const goals = await getGoals(user.id)
         console.log('Fetched goals:', goals)
-        setCountActiveGoals(
-          goals.filter(goal => goal.status === 'active').length
-        )
+        setCountActiveGoals(goals.filter(goal => goal.title.length >= 1).length)
         // setCountCompletedGoal(goals.filter(goal => goal.status === 'completed').length)
         if (!userProfile) {
           throw new Error('User profile not found')

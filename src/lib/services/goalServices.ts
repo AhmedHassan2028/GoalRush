@@ -13,7 +13,7 @@ export const postGoal = async (userId: string, goal: Goal): Promise<Goal> => {
 
     console.log('Posting goal for user:', userId, 'Goal:', goal)
     const response = await apiClient.POST<Goal>(
-      '/user/goals',
+      `user/${userId}/goals`,
       { userId, goal },
       {
         cache: 'no-store',
@@ -29,12 +29,15 @@ export const postGoal = async (userId: string, goal: Goal): Promise<Goal> => {
 export const getGoals = async (userId: string): Promise<Goal[]> => {
   try {
     if (!userId) {
-      throw new Error('Unautharized')
+      throw new Error('Unauthorized')
     }
-    const response = await apiClient.GET<Goal[]>('/user/goals', {
-      cache: 'no-store',
-    })
-    return response
+
+    const response = await apiClient.GET<{ goals: Goal[] }>(
+      `user/${userId}/goals`,
+      { cache: 'no-store' }
+    )
+
+    return response.goals
   } catch (error) {
     console.log(error)
     throw error
