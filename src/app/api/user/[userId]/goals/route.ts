@@ -47,6 +47,7 @@ export async function POST(request: NextRequest) {
     const createdGoal = {
       id: goalRef.id,
       ...goal,
+      status: 'active',
     }
 
     await goalRef.set(createdGoal)
