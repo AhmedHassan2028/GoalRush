@@ -16,7 +16,10 @@ export async function GET(
     }
 
     // Fetch all goals for the user
-    const goalsSnapshot = await db.collection(`users/${userId}/goals`).get()
+    const goalsSnapshot = await db
+      .collection(`users/${userId}/goals`)
+      .limit(5) // only load a few during testing
+      .get()
     const goals = goalsSnapshot.docs.map(doc => {
       return { id: doc.id, ...doc.data() }
     })

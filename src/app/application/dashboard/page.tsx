@@ -19,6 +19,10 @@ import {
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
+import { Trash2 } from 'lucide-react'
+import { Pencil } from 'lucide-react'
+import { View } from 'lucide-react'
+
 const UserDashboard = () => {
   // const stats = [
   //   {
@@ -116,6 +120,10 @@ const UserDashboard = () => {
 
   const goalPage = () => {
     router.push('/application/createGoal')
+  }
+
+  const viewGoalPage = () => {
+    router.push('/application/viewGoal')
   }
 
   return (
@@ -258,12 +266,20 @@ const UserDashboard = () => {
               </div>
               <div className='self-center'>
                 <button
-                  onClick={() => {
-                    // leave this empty for now
-                  }}
-                  className='px-4 py-2 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-md'
+                  className='text-red-600 hover:text-red-800'
+                  onClick={viewGoalPage}
                 >
-                  View Details
+                  <View className='w-5 h-5' />
+                </button>
+              </div>
+              <div className='self-center'>
+                <button className='text-red-600 hover:text-red-800'>
+                  <Pencil className='w-5 h-5' />
+                </button>
+              </div>
+              <div className='self-center'>
+                <button className='text-red-600 hover:text-red-800'>
+                  <Trash2 className='w-5 h-5' />
                 </button>
               </div>
             </div>
