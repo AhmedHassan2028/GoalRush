@@ -1,5 +1,8 @@
 'use client'
 
+import { getGoals } from '@/lib/services/goalServices'
+import { Goal } from '@/types'
+import { useUser } from '@clerk/nextjs'
 // import GoalForm from '@/components/ui/goalForm'
 import {
   // TrendingUp,
@@ -14,6 +17,7 @@ import {
   // Bell,
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 const UserDashboard = () => {
   // const stats = [
@@ -47,43 +51,65 @@ const UserDashboard = () => {
   //   },
   // ]
 
-  const recentActivity = [
-    {
-      id: 1,
-      action: 'New user registration',
-      user: 'John Doe',
-      created: '2 minutes ago',
-      type: 'user',
-    },
-    {
-      id: 2,
-      action: 'Payment received',
-      user: 'Sarah Smith',
-      created: '5 minutes ago',
-      type: 'payment',
-    },
-    {
-      id: 3,
-      action: 'Support ticket created',
-      user: 'Mike Johnson',
-      created: '12 minutes ago',
-      type: 'support',
-    },
-    {
-      id: 4,
-      action: 'Product viewed',
-      user: 'Emma Wilson',
-      created: '18 minutes ago',
-      type: 'activity',
-    },
-    {
-      id: 5,
-      action: 'Account upgraded',
-      user: 'David Brown',
-      created: '25 minutes ago',
-      type: 'upgrade',
-    },
-  ]
+  const [userGoals, setUserGoals] = useState<Goal[]>([])
+  const { user, isLoaded } = useUser()
+
+  useEffect(() => {
+    const loadUserGoals = async () => {
+      try {
+        if (user && user.id) {
+          const goals = await getGoals(user.id)
+          console.log('Fetched goals:', goals)
+          setUserGoals(goals)
+        }
+      } catch (error) {
+        console.error('Error fetching goals:', error)
+      } finally {
+        console.log('Goals found')
+      }
+    }
+    if (isLoaded && user && user.id) {
+      loadUserGoals()
+    }
+  }, [isLoaded, user, userGoals])
+
+  // const recentActivity = [
+  //   {
+  //     id: 1,
+  //     action: 'New user registration',
+  //     user: 'John Doe',
+  //     created: '2 minutes ago',
+  //     type: 'user',
+  //   },
+  //   {
+  //     id: 2,
+  //     action: 'Payment received',
+  //     user: 'Sarah Smith',
+  //     created: '5 minutes ago',
+  //     type: 'payment',
+  //   },
+  //   {
+  //     id: 3,
+  //     action: 'Support ticket created',
+  //     user: 'Mike Johnson',
+  //     created: '12 minutes ago',
+  //     type: 'support',
+  //   },
+  //   {
+  //     id: 4,
+  //     action: 'Product viewed',
+  //     user: 'Emma Wilson',
+  //     created: '18 minutes ago',
+  //     type: 'activity',
+  //   },
+  //   {
+  //     id: 5,
+  //     action: 'Account upgraded',
+  //     user: 'David Brown',
+  //     created: '25 minutes ago',
+  //     type: 'upgrade',
+  //   },
+  // ]
 
   //The upcoming 5 lines link you to different routes of your application, that function is called for the onclick of the button
   const router = useRouter()
@@ -219,31 +245,27 @@ const UserDashboard = () => {
           </button>
         </div>
         <div className='space-y-4'>
-          {recentActivity.map(activity => (
+          {userGoals.map(goal => (
             <div
-              key={activity.id}
-              className='flex items-center gap-4 p-3 bg-muted/20 rounded-lg hover:bg-muted/30 transition-colors'
+              key={goal.id}
+              className='flex justify-between items-start gap-4 p-4 bg-muted/20 rounded-lg hover:bg-muted/30 transition-colors'
             >
-              <div
-                className={`w-2 h-2 rounded-full ${
-                  activity.type === 'user'
-                    ? 'bg-green-500'
-                    : activity.type === 'payment'
-                      ? 'bg-blue-500'
-                      : activity.type === 'support'
-                        ? 'bg-yellow-500'
-                        : activity.type === 'upgrade'
-                          ? 'bg-purple-500'
-                          : 'bg-gray-500'
-                }`}
-              />
               <div className='flex-1'>
-                <p className='font-medium'>{activity.action}</p>
-                <p className='text-sm text-muted-foreground'>{activity.user}</p>
+                <p className='font-semibold text-lg'>{goal.title}</p>
+                <p className='text-sm text-muted-foreground mt-1'>
+                  {goal.description}
+                </p>
               </div>
-              <span className='text-sm text-muted-foreground'>
-                {activity.created}
-              </span>
+              <div className='self-center'>
+                <button
+                  onClick={() => {
+                    // leave this empty for now
+                  }}
+                  className='px-4 py-2 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-md'
+                >
+                  View Details
+                </button>
+              </div>
             </div>
           ))}
         </div>

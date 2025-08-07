@@ -68,6 +68,8 @@ function SimpleForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const userGoal: Goal = {
       ...values,
+      id: undefined,
+      type: '',
     }
 
     try {
