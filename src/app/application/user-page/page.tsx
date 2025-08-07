@@ -78,7 +78,7 @@ export default function UserAccount() {
       color: 'text-blue-600',
     },
     {
-      label: 'Goals created',
+      label: 'Active goals',
       value: countActiveGoals,
       icon: Calendar,
       color: 'text-green-600',
