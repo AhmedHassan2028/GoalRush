@@ -31,7 +31,7 @@ export const getGoals = async (userId: string): Promise<Goal[]> => {
     if (!userId) {
       throw new Error('Unautharized')
     }
-    const response = await apiClient.GET<Goal[]>(`user/${userId}/goals`, {
+    const response = await apiClient.GET<Goal[]>('/user/goals', {
       cache: 'no-store',
     })
     return response

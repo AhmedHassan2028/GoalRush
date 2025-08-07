@@ -17,11 +17,13 @@ import {
 import { fetchUserProfile } from '@/lib/services/userServices'
 import { UserProfile } from '@/types'
 import { useUser } from '@clerk/nextjs'
+import { getGoals } from '@/lib/services/goalServices'
 // import GoalForm from '../createGoal/page'
 
 export default function UserAccount() {
   const [userProfile, setuserProfile] = useState<UserProfile | null>(null)
   const { user, isLoaded } = useUser()
+  const [countActiveGoals, setCountActiveGoals] = useState<number>(0)
 
   useEffect(() => {
     const loadUserProfile = async () => {
@@ -30,15 +32,20 @@ export default function UserAccount() {
       }
       try {
         const userProfile: UserProfile = await fetchUserProfile(user.id)
-        console.log('User Profile:', userProfile)
+        const goals = await getGoals(user.id)
+        console.log('Fetched goals:', goals)
+        setCountActiveGoals(
+          goals.filter(goal => goal.status === 'active').length
+        )
+        // setCountCompletedGoal(goals.filter(goal => goal.status === 'completed').length)
         if (!userProfile) {
           throw new Error('User profile not found')
         }
         setuserProfile(userProfile)
       } catch (error) {
-        console.error('Error fetching popular movies:', error)
+        console.error('Error fetching user profile:', error)
       } finally {
-        console.log('Popular movies loaded')
+        console.log('User profile loaded')
       }
     }
     if (isLoaded) {
@@ -74,7 +81,7 @@ export default function UserAccount() {
     },
     {
       label: 'Goals created',
-      value: 0,
+      value: countActiveGoals,
       icon: Calendar,
       color: 'text-green-600',
     },
