@@ -121,9 +121,15 @@ const UserDashboard = () => {
     router.push('/application/createGoal')
   }
 
-  const viewGoalPage = () => {
-    router.push('/application/viewGoal')
+  const viewGoal = (goalsId: string) => {
+    if (user?.id) {
+      router.push(`/application/user/${user.id}/goals/${goalsId}`)
+    }
   }
+
+  // const viewGoalInfo = () => {
+  //   router.push(`/users/${userId}/goals/${goalId}`)
+  // }
 
   return (
     <div className='space-y-6'>
@@ -266,14 +272,12 @@ const UserDashboard = () => {
               <div className='self-center'>
                 Deadline: {new Date(goal.deadline).toDateString()}
               </div>
-              <div className='self-center'>
-                Status: {goal.status}
-              </div>
+              <div className='self-center'>Status: {goal.status}</div>
 
               <div className='self-center'>
                 <button
-                  className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium'
-                  onClick={viewGoalPage}
+                  onClick={() => viewGoal(goal.id)}
+                  className='text-blue-600 hover:text-blue-700 ...'
                 >
                   <Eye className='w-5 h-5' />
                 </button>

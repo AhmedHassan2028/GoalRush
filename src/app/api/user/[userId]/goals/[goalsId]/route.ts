@@ -4,11 +4,11 @@ import { db } from '@/lib/firebaseAdmin'
 // Top-level GET function
 export async function GET(
   _request: Request,
-  { params }: { params: { userId: string; goalId: string } }
+  { params }: { params: { userId: string; goalsId: string } }
 ) {
-  const { userId, goalId } = params
+  const { userId, goalsId } = params
 
-  if (!userId || !goalId) {
+  if (!userId || !goalsId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
@@ -17,7 +17,7 @@ export async function GET(
       .collection('users')
       .doc(userId)
       .collection('goals')
-      .doc(goalId)
+      .doc(goalsId)
       .get()
 
     if (!goalDoc.exists) {
@@ -27,10 +27,12 @@ export async function GET(
     return NextResponse.json({ goal: { id: goalDoc.id, ...goalDoc.data() } })
   } catch (error) {
     console.error('Error fetching individual goal:', error)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
   }
 }
-
 
 // Top-level POST function
 export async function POST(request: NextRequest) {
