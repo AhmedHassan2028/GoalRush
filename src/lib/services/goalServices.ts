@@ -43,3 +43,24 @@ export const getGoals = async (userId: string): Promise<Goal[]> => {
     throw error
   }
 }
+export const getIndividualGoal = async (userId: string, goalId: string): Promise<Goal> => {
+  try {
+    if (!userId || !goalId) {
+      throw new Error('Unauthorized')
+    }
+
+    const response = await apiClient.GET<{ goal: Goal }>(
+      `user/${userId}/goals/${goalId}`,
+      { cache: 'no-store' }
+    )
+
+  if (!response || !response.goal) {
+    throw new Error('Goal not found')
+  }
+
+    return response.goal
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
