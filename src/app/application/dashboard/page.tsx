@@ -21,7 +21,7 @@ import { useEffect, useState } from 'react'
 
 import { Trash2 } from 'lucide-react'
 import { Pencil } from 'lucide-react'
-import { View } from 'lucide-react'
+import { Eye } from 'lucide-react'
 
 const UserDashboard = () => {
   // const stats = [
@@ -63,7 +63,6 @@ const UserDashboard = () => {
       try {
         if (user && user.id) {
           const goals = await getGoals(user.id)
-          console.log('Fetched goals:', goals)
           setUserGoals(goals)
         }
       } catch (error) {
@@ -265,15 +264,19 @@ const UserDashboard = () => {
                 </p>
               </div>
               <div className='self-center'>
+                Deadline: {new Date(goal.deadline).toDateString()}
+              </div>
+
+              <div className='self-center'>
                 <button
-                  className='text-red-600 hover:text-red-800'
+                  className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium'
                   onClick={viewGoalPage}
                 >
-                  <View className='w-5 h-5' />
+                  <Eye className='w-5 h-5' />
                 </button>
               </div>
               <div className='self-center'>
-                <button className='text-red-600 hover:text-red-800'>
+                <button className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium'>
                   <Pencil className='w-5 h-5' />
                 </button>
               </div>

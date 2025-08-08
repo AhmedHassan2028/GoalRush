@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/firebaseAdmin'
 
+// Top-level GET function
 export async function GET(
-  // Underscore prefix indicates unused param
   _request: Request,
   props: { params: Promise<{ userId: string }> }
 ) {
@@ -15,14 +15,15 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // Fetch all goals for the user
     const goalsSnapshot = await db
       .collection(`users/${userId}/goals`)
-      .limit(5) // only load a few during testing
+      .limit(5)
       .get()
-    const goals = goalsSnapshot.docs.map(doc => {
-      return { id: doc.id, ...doc.data() }
-    })
+
+    const goals = goalsSnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
 
     return NextResponse.json({ goals })
   } catch (error) {
@@ -34,9 +35,9 @@ export async function GET(
   }
 }
 
+// Top-level POST function
 export async function POST(request: NextRequest) {
   try {
-    // Extract the userId from query parameters
     const { userId, goal } = await request.json()
 
     if (!userId || !goal) {
@@ -45,8 +46,8 @@ export async function POST(request: NextRequest) {
 
     console.log('Creating goal for user:', userId, 'Goal:', goal)
 
-    // Using Admin SDK to create a new goal
     const goalRef = db.collection('users').doc(userId).collection('goals').doc()
+
     const createdGoal = {
       id: goalRef.id,
       ...goal,
@@ -58,7 +59,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(createdGoal, { status: 201 })
   } catch (error) {
-    console.error('Error fetching user:', error)
+    console.error('Error creating goal:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
