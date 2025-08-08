@@ -74,7 +74,7 @@ const UserDashboard = () => {
     if (isLoaded && user && user.id) {
       loadUserGoals()
     }
-  }, [isLoaded, user, userGoals])
+  }, [isLoaded, user])
 
   // const recentActivity = [
   //   {
@@ -242,7 +242,7 @@ const UserDashboard = () => {
       <div className='bg-card rounded-xl p-6 border shadow-sm'>
         <div className='flex items-center justify-between mb-6'>
           <div>
-            <h3 className='text-lg font-semibold'>Recent Activity</h3>
+            <h3 className='text-lg font-semibold'>Recent Goals</h3>
             <p className='text-muted-foreground text-sm'>
               View your latest goals and access them
             </p>
@@ -265,6 +265,9 @@ const UserDashboard = () => {
               </div>
               <div className='self-center'>
                 Deadline: {new Date(goal.deadline).toDateString()}
+              </div>
+              <div className='self-center'>
+                Status: {goal.status}
               </div>
 
               <div className='self-center'>
