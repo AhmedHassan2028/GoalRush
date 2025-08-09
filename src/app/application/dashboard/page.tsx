@@ -1,6 +1,6 @@
 'use client'
 
-import { getGoals } from '@/lib/services/goalServices'
+import { deleteGoal, getGoals } from '@/lib/services/goalServices'
 import { Goal } from '@/types'
 import { useUser } from '@clerk/nextjs'
 // import GoalForm from '@/components/ui/goalForm'
@@ -127,9 +127,22 @@ const UserDashboard = () => {
     }
   }
 
-  // const viewGoalInfo = () => {
-  //   router.push(`/users/${userId}/goals/${goalId}`)
-  // }
+  const handleDeleteGoal = async (goalsId: string) => {
+    if (!user?.id) return
+
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this goal? This action cannot be undone.'
+    )
+    if (!confirmed) return
+
+    try {
+      await deleteGoal(user.id, goalsId)
+      setUserGoals(prev => prev.filter(goal => goal.id !== goalsId))
+    } catch (error) {
+      console.error(error)
+      alert('Failed to delete goal')
+    }
+  }
 
   return (
     <div className='space-y-6'>
@@ -288,7 +301,10 @@ const UserDashboard = () => {
                 </button>
               </div>
               <div className='self-center'>
-                <button className='text-red-600 hover:text-red-800'>
+                <button
+                  className='text-red-600 hover:text-red-800'
+                  onClick={() => handleDeleteGoal(goal.id)} // <-- Wrap in arrow function to pass id
+                >
                   <Trash2 className='w-5 h-5' />
                 </button>
               </div>

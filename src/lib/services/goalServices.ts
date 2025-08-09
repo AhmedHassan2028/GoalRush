@@ -67,3 +67,14 @@ export const getIndividualGoal = async (
     throw error
   }
 }
+
+export const deleteGoal = async (
+  userId: string,
+  goalsId: string
+): Promise<void> => {
+  if (!userId || !goalsId) {
+    throw new Error('Unauthorized')
+  }
+
+  await apiClient.DELETE<void>(`user/${userId}/goals/${goalsId}`)
+}

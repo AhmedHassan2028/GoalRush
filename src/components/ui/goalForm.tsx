@@ -69,7 +69,7 @@ function SimpleForm() {
     const userGoal: Goal = {
       ...values,
       id: undefined,
-      type: '',
+      type: values.goalType,
     }
 
     try {
