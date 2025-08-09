@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/firebaseAdmin'
 
-// Top-level GET function
+// GET individual goal
 export async function GET(
   _request: Request,
-  { params }: { params: { userId: string; goalsId: string } }
+  context: { params: Promise<{ userId: string; goalsId: string }> }
 ) {
-  const { userId, goalsId } = params
+  const { userId, goalsId } = await context.params
 
   if (!userId || !goalsId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -34,7 +34,7 @@ export async function GET(
   }
 }
 
-// Top-level POST function
+// POST new goal
 export async function POST(request: NextRequest) {
   try {
     const { userId, goal } = await request.json()

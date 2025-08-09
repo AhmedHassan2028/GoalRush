@@ -10,4 +10,5 @@ export interface Goal {
   deadline: Date
   status?: 'active' | 'completed' | 'expired'
   createdBy?: string
+  createdAt: string
 }
