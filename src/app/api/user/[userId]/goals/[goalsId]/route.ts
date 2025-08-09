@@ -65,3 +65,34 @@ export async function POST(request: NextRequest) {
     )
   }
 }
+
+export async function DELETE(
+  _request: Request,
+  context: { params: Promise<{ userId: string; goalsId: string }> }
+) {
+  const { userId, goalsId } = await context.params
+
+  if (!userId || !goalsId) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  try {
+    await db
+      .collection('users')
+      .doc(userId)
+      .collection('goals')
+      .doc(goalsId)
+      .delete()
+
+    return NextResponse.json(
+      { message: 'Goal deleted successfully' },
+      { status: 200 }
+    )
+  } catch (error) {
+    console.error('Error deleting goal:', error)
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
+  }
+}
