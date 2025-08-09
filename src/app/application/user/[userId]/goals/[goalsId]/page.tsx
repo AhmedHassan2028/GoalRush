@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { getIndividualGoal } from '@/lib/services/goalServices'
-import { ArrowLeft, Eye } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 
 type ViewGoalProps = {
   params: Promise<{ userId: string; goalsId: string }>
