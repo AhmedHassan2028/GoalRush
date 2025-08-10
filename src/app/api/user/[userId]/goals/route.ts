@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
       id: goalRef.id,
       ...goal,
       status: 'active',
+      currentValue: '0',
     }
 
     await goalRef.set(createdGoal)
