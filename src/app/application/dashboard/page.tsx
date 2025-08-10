@@ -289,7 +289,7 @@ const UserDashboard = () => {
 
               <div className='self-center'>
                 <button
-                  onClick={() => viewGoal(goal.id)}
+                  onClick={() => viewGoal(goal?.id)}
                   className='text-blue-600 hover:text-blue-700 ...'
                 >
                   <Eye className='w-5 h-5' />

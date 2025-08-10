@@ -34,38 +34,6 @@ export async function GET(
   }
 }
 
-// POST new goal
-export async function POST(request: NextRequest) {
-  try {
-    const { userId, goal } = await request.json()
-
-    if (!userId || !goal) {
-      return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
-    }
-
-    console.log('Creating goal for user:', userId, 'Goal:', goal)
-
-    const goalRef = db.collection('users').doc(userId).collection('goals').doc()
-
-    const createdGoal = {
-      id: goalRef.id,
-      ...goal,
-      status: 'active',
-    }
-
-    await goalRef.set(createdGoal)
-    console.log('Goal created:', createdGoal)
-
-    return NextResponse.json(createdGoal, { status: 201 })
-  } catch (error) {
-    console.error('Error creating goal:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
-  }
-}
-
 export async function DELETE(
   _request: Request,
   context: { params: Promise<{ userId: string; goalsId: string }> }
@@ -90,6 +58,70 @@ export async function DELETE(
     )
   } catch (error) {
     console.error('Error deleting goal:', error)
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
+  }
+}
+
+export async function PATCH(
+  request: Request,
+  { params }: { params: { userId: string; goalsId: string } }
+) {
+  const { userId, goalsId } = params
+
+  if (!userId || !goalsId) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  try {
+    const data = await request.json()
+
+    await db
+      .collection('users')
+      .doc(userId)
+      .collection('goals')
+      .doc(goalsId)
+      .update(data)
+
+    return NextResponse.json(
+      { message: 'Goal updated successfully' },
+      { status: 200 }
+    )
+  } catch (error) {
+    console.error('Error updating goal:', error)
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const { userId, goal } = await request.json()
+
+    if (!userId || !goal) {
+      return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
+    }
+
+    console.log('Creating goal for user:', userId, 'Goal:', goal)
+
+    const goalRef = db.collection('users').doc(userId).collection('goals').doc()
+
+    const createdGoal = {
+      id: goalRef.id,
+      ...goal,
+      status: 'active',
+    }
+
+    await goalRef.set(createdGoal)
+    console.log('Goal created:', createdGoal)
+
+    return NextResponse.json(createdGoal, { status: 201 })
+  } catch (error) {
+    console.error('Error creating goal:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

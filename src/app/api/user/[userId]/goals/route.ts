@@ -17,7 +17,7 @@ export async function GET(
 
     const goalsSnapshot = await db
       .collection(`users/${userId}/goals`)
-      .limit(5)
+      // .limit(5)
       .get()
 
     const goals = goalsSnapshot.docs.map(doc => ({
