@@ -128,11 +128,11 @@ function SimpleForm() {
               <FormControl>
                 <select
                   {...field}
-                  className='border rounded px-3 py-2 w-full'
                   onChange={e => {
-                    field.onChange(e)
+                    field.onChange(e.target.value)
                     setGoalType(e.target.value)
                   }}
+                  className='w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2'
                 >
                   <option value=''>Select goal type</option>
                   <option value='time'>Time-based (e.g., 50 hours)</option>

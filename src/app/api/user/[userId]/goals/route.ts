@@ -49,8 +49,8 @@ export async function POST(request: NextRequest) {
     const goalRef = db.collection('users').doc(userId).collection('goals').doc()
 
     const createdGoal = {
-      id: goalRef.id,
       ...goal,
+      id: goalRef.id,
       status: 'active',
       currentValue: '0',
     }

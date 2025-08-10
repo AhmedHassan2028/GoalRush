@@ -290,19 +290,19 @@ const UserDashboard = () => {
               <div className='self-center'>
                 <button
                   onClick={() => viewGoal(goal?.id)}
-                  className='text-blue-600 hover:text-blue-700 ...'
+                  className='text-blue-600 hover:text-blue-700 cursor-pointer'
                 >
                   <Eye className='w-5 h-5' />
                 </button>
               </div>
               <div className='self-center'>
-                <button className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium'>
+                <button className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium cursor-pointer'>
                   <Pencil className='w-5 h-5' />
                 </button>
               </div>
               <div className='self-center'>
                 <button
-                  className='text-red-600 hover:text-red-800'
+                  className='text-red-600 hover:text-red-800 cursor-pointer'
                   onClick={() => handleDeleteGoal(goal.id)} // <-- Wrap in arrow function to pass id
                 >
                   <Trash2 className='w-5 h-5' />
