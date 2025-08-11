@@ -76,6 +76,14 @@ const UserDashboard = () => {
     }
   }, [isLoaded, user])
 
+  // if (!userGoals) {
+  //   return (
+  //     <main className='max-w-3xl mx-auto px-4 py-8'>
+  //       <p className='text-gray-500 dark:text-gray-400'>Loading goal...</p>
+  //     </main>
+  //   )
+  // }
+
   // const recentActivity = [
   //   {
   //     id: 1,
@@ -124,6 +132,11 @@ const UserDashboard = () => {
   const viewGoal = (goalsId: string) => {
     if (user?.id) {
       router.push(`/application/user/${user.id}/goals/${goalsId}`)
+    }
+  }
+  const editGoal = (goalsId: string) => {
+    if (user?.id) {
+      router.push(`/application/user/${user.id}/goals/${goalsId}/edit`)
     }
   }
 
@@ -296,7 +309,10 @@ const UserDashboard = () => {
                 </button>
               </div>
               <div className='self-center'>
-                <button className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium cursor-pointer'>
+                <button
+                  className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium cursor-pointer'
+                  onClick={() => editGoal(goal.id)} // <-- Pass id here
+                >
                   <Pencil className='w-5 h-5' />
                 </button>
               </div>

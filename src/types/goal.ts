@@ -11,5 +11,5 @@ export interface Goal {
   status?: 'active' | 'completed' | 'expired'
   createdBy?: string
   createdAt?: string
-  currentValue?: string | number
+  currentValue?: string
 }

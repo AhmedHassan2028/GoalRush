@@ -4,9 +4,11 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { format } from 'date-fns'
+
 import { useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { updateIndividualGoal } from '@/lib/services/goalServices'
+import { Goal } from '@/types/goal'
 
 import {
   Form,
@@ -28,7 +30,7 @@ import {
 import { Calendar } from '@/components/ui/calendar'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
-// Make all fields optional
+// Make all fields optional and relax validations
 const formSchema = z.object({
   title: z.string().min(2, 'Title must be at least 2 characters').optional(),
   description: z
@@ -36,37 +38,25 @@ const formSchema = z.object({
     .min(5, 'Description must be at least 5 characters')
     .max(500)
     .optional(),
-  goalType: z
-    .enum(['time', 'count', 'simple'], 'Goal type is required')
-    .optional(),
-  currentValue: z.string().min(1, 'Current value is required').optional(),
-  value: z.string().min(1, 'Value is required').optional(),
+  goalType: z.enum(['time', 'count', 'simple']).optional(),
+  currentValue: z.string().optional(), // optional now
+  value: z.string().optional(),
   deadline: z.date().optional(),
 })
 
-function EditGoalForm({
-  goalId,
-  initialData,
-  onSuccess,
-}: {
-  goalId: string
-  initialData: Partial<z.infer<typeof formSchema>>
-  onSuccess?: () => void
-}) {
+function SimpleForm() {
   const { user } = useUser()
-  const [goalType, setGoalType] = useState<string>(initialData.goalType || '')
+  const [goalType, setGoalType] = useState<string>('')
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: initialData.title || '',
-      description: initialData.description || '',
-      goalType: initialData.goalType || undefined,
-      currentValue: initialData.currentValue || '',
-      value: initialData.value || '',
-      deadline: initialData.deadline
-        ? new Date(initialData.deadline)
-        : undefined,
+      title: '',
+      description: '',
+      goalType: undefined,
+      currentValue: '',
+      value: '',
+      deadline: undefined,
     },
   })
 
@@ -77,29 +67,22 @@ function EditGoalForm({
   }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    const userGoal: Goal = {
+      id: '',
+      type: values.goalType ?? '',
+      goalType: values.goalType ?? '',
+      title: values.title ?? '',
+      description: values.description ?? '',
+      currentValue: values.currentValue ?? '',
+      value: values.value ?? '',
+      deadline: values.deadline ?? new Date(),
+    }
+
     try {
       if (!user?.id) return
-
-      // Merge only non-empty values, otherwise keep old
-      const updatedGoal = {
-        ...initialData,
-        ...Object.fromEntries(
-          Object.entries(values).filter(
-            ([, v]) => v !== undefined && v !== '' && v !== null
-          )
-        ),
-      }
-
-      // Ensure deadline is a Date if present as string in initialData
-      if (updatedGoal.deadline && !(updatedGoal.deadline instanceof Date)) {
-        updatedGoal.deadline = new Date(updatedGoal.deadline)
-      }
-
-      await updateIndividualGoal(user.id, goalId, updatedGoal)
-
-      console.log('Goal updated:', updatedGoal)
-      alert('Goal updated successfully')
-      if (onSuccess) onSuccess()
+      await updateIndividualGoal(user.id, userGoal.id, userGoal)
+      console.log('Goal updated:', userGoal)
+      alert('Goal updated')
     } catch (error) {
       console.error('Failed to update goal:', error)
     }
@@ -246,25 +229,21 @@ function EditGoalForm({
 
         {/* Submit */}
         <Button type='submit' className='w-full'>
-          Update Goal
+          Create
         </Button>
       </form>
     </Form>
   )
 }
 
-export default function GoalEditCard(props: {
-  goalId: string
-  initialData: Partial<z.infer<typeof formSchema>>
-  onSuccess?: () => void
-}) {
+export default function EditGoalForm() {
   return (
     <Card className='w-full'>
       <CardHeader>
-        <CardTitle className='text-center'>Edit Goal</CardTitle>
+        <CardTitle className='text-center'>Create New Goal</CardTitle>
       </CardHeader>
       <CardContent>
-        <EditGoalForm {...props} />
+        <SimpleForm />
       </CardContent>
     </Card>
   )
