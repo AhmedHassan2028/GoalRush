@@ -67,9 +67,9 @@ export async function DELETE(
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { userId: string; goalsId: string } }
+  context: { params: Promise<{ userId: string; goalsId: string }> }
 ) {
-  const { userId, goalsId } = params
+  const { userId, goalsId } = await context.params
 
   if (!userId || !goalsId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -78,15 +78,22 @@ export async function PATCH(
   try {
     const data = await request.json()
 
-    await db
+    const goalRef = db
       .collection('users')
       .doc(userId)
       .collection('goals')
       .doc(goalsId)
-      .update(data)
+
+    await goalRef.update(data)
+
+    const updatedGoalDoc = await goalRef.get()
+
+    if (!updatedGoalDoc.exists) {
+      return NextResponse.json({ error: 'Goal not found' }, { status: 404 })
+    }
 
     return NextResponse.json(
-      { message: 'Goal updated successfully' },
+      { goal: { id: updatedGoalDoc.id, ...updatedGoalDoc.data() } },
       { status: 200 }
     )
   } catch (error) {

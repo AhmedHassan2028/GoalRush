@@ -86,22 +86,32 @@ export const updateIndividualGoal = async (
 ): Promise<Goal> => {
   try {
     if (!userId || !goalsId) {
-      throw new Error('Unauthorized')
+      throw new Error('Unauthorized: Missing userId or goalsId')
     }
 
-    const response = await apiClient.PATCH<{ goal: Goal }>(
+    console.log('PATCH request to:', `user/${userId}/goals/${goalsId}`, updates)
+
+    const response = await apiClient.PATCH<{ goal?: Goal; error?: string }>(
       `user/${userId}/goals/${goalsId}`,
-      updates, // <-- send only the fields you want to update
+      updates,
       { cache: 'no-store' }
     )
 
-    if (!response || !response.goal) {
-      throw new Error('Goal not found')
+    if (!response) {
+      throw new Error('No response from server')
+    }
+
+    if (response.error) {
+      throw new Error(`Server error: ${response.error}`)
+    }
+
+    if (!response.goal) {
+      throw new Error('Goal not found in server response')
     }
 
     return response.goal
-  } catch (error) {
-    console.error(error)
+  } catch (error: unknown) {
+    console.error('updateIndividualGoal failed:', error)
     throw error
   }
 }

@@ -5,9 +5,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { format } from 'date-fns'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
-import { updateIndividualGoal } from '@/lib/services/goalServices'
+import {
+  updateIndividualGoal,
+  getIndividualGoal,
+} from '@/lib/services/goalServices' // <-- add getIndividualGoal
 import { Goal } from '@/types/goal'
 
 import {
@@ -30,7 +33,7 @@ import {
 import { Calendar } from '@/components/ui/calendar'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
-// Make all fields optional and relax validations
+// Relaxed validations and all fields optional
 const formSchema = z.object({
   title: z.string().min(2, 'Title must be at least 2 characters').optional(),
   description: z
@@ -39,12 +42,17 @@ const formSchema = z.object({
     .max(500)
     .optional(),
   goalType: z.enum(['time', 'count', 'simple']).optional(),
-  currentValue: z.string().optional(), // optional now
+  currentValue: z.string().optional(),
   value: z.string().optional(),
   deadline: z.date().optional(),
 })
 
-function SimpleForm() {
+interface Props {
+  userId: string
+  goalId: string
+}
+
+function SimpleForm({ userId, goalId }: Props) {
   const { user } = useUser()
   const [goalType, setGoalType] = useState<string>('')
 
@@ -66,11 +74,36 @@ function SimpleForm() {
     simple: 'e.g., 1',
   }
 
+  // Fetch goal on mount and reset form
+  useEffect(() => {
+    async function fetchGoal() {
+      if (!userId || !goalId) return
+      try {
+        const goal = await getIndividualGoal(userId, goalId)
+        if (goal) {
+          form.reset({
+            title: goal.title,
+            description: goal.description,
+            goalType: goal.goalType,
+            currentValue: goal.currentValue ?? '',
+            value: goal.value,
+            deadline: goal.deadline ? new Date(goal.deadline) : undefined,
+          })
+          setGoalType(goal.goalType ?? '')
+        }
+      } catch (error) {
+        console.error('Failed to load goal:', error)
+      }
+    }
+    fetchGoal()
+  }, [userId, goalId, form])
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!user?.id) return
+
     const userGoal: Goal = {
-      id: '',
-      type: values.goalType ?? '',
-      goalType: values.goalType ?? '',
+      id: goalId,
+      goalType: values.goalType ?? 'simple',
       title: values.title ?? '',
       description: values.description ?? '',
       currentValue: values.currentValue ?? '',
@@ -79,12 +112,12 @@ function SimpleForm() {
     }
 
     try {
-      if (!user?.id) return
       await updateIndividualGoal(user.id, userGoal.id, userGoal)
       console.log('Goal updated:', userGoal)
       alert('Goal updated')
     } catch (error) {
       console.error('Failed to update goal:', error)
+      alert('Failed to update goal, check console')
     }
   }
 
@@ -229,21 +262,21 @@ function SimpleForm() {
 
         {/* Submit */}
         <Button type='submit' className='w-full'>
-          Create
+          Update
         </Button>
       </form>
     </Form>
   )
 }
 
-export default function EditGoalForm() {
+export default function EditGoalForm({ userId, goalId }: Props) {
   return (
     <Card className='w-full'>
       <CardHeader>
-        <CardTitle className='text-center'>Create New Goal</CardTitle>
+        <CardTitle className='text-center'>Update Goal</CardTitle>
       </CardHeader>
       <CardContent>
-        <SimpleForm />
+        <SimpleForm userId={userId} goalId={goalId} />
       </CardContent>
     </Card>
   )

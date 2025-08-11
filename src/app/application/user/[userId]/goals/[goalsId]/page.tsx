@@ -7,9 +7,11 @@ import { useEffect, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useParams } from 'next/navigation'
 import type { Goal } from '@/types'
+import { useRouter } from 'next/navigation'
 // import GoalEditCard from '@/components/ui/editForm'
 
 export default function OneGoalPage() {
+  const router = useRouter()
   const { goalsId } = useParams<{ goalsId: string }>()
   const [goal, setGoal] = useState<Goal | null>(null)
   const { user, isLoaded } = useUser()
@@ -37,6 +39,12 @@ export default function OneGoalPage() {
         <p className='text-gray-500 dark:text-gray-400'>Loading goal...</p>
       </main>
     )
+  }
+
+  const editGoal = (goalsId: string) => {
+    if (user?.id) {
+      router.push(`/application/user/${user.id}/goals/${goalsId}/edit`)
+    }
   }
 
   return (
@@ -71,6 +79,7 @@ export default function OneGoalPage() {
             <button
               className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium cursor-pointer'
               aria-label='Edit goal'
+              onClick={() => editGoal(goalsId)} // Pass goalsId here
             >
               <Pencil className='w-5 h-5' />
             </button>
@@ -99,7 +108,7 @@ export default function OneGoalPage() {
         <div className='bg-gray-50 dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700'>
           <p className='text-sm text-gray-500 dark:text-gray-400'>Type</p>
           <p className='text-base font-medium text-gray-800 dark:text-gray-100'>
-            {goal.type}
+            {goal.goalType}
           </p>
         </div>
 

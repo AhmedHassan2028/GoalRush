@@ -2,10 +2,10 @@
 
 export interface Goal {
   id: string
-  type: string
+  // type?: string
   title: string
   description: string
-  goalType: string
+  goalType?: 'time' | 'count' | 'simple'
   value: string
   deadline: Date
   status?: 'active' | 'completed' | 'expired'

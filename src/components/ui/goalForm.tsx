@@ -68,8 +68,8 @@ function SimpleForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const userGoal: Goal = {
       ...values,
-      type: values.goalType,
-      id: '',
+      id: '', // keep empty or generate elsewhere
+      currentValue: '', // set default since not in form
     }
 
     try {
