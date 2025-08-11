@@ -1,18 +1,46 @@
+'use client'
+
 import Link from 'next/link'
 import { getIndividualGoal } from '@/lib/services/goalServices'
 import { ArrowLeft, Pencil } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useUser } from '@clerk/nextjs'
+import { useParams } from 'next/navigation'
+import type { Goal } from '@/types'
+// import GoalEditCard from '@/components/ui/editForm'
 
-type ViewGoalProps = {
-  params: Promise<{ userId: string; goalsId: string }>
-}
+export default function OneGoalPage() {
+  const { goalsId } = useParams<{ goalsId: string }>()
+  const [goal, setGoal] = useState<Goal | null>(null)
+  const { user, isLoaded } = useUser()
 
-export default async function OneGoalPage({ params }: ViewGoalProps) {
-  const { userId, goalsId } = await params
-  const goal = await getIndividualGoal(userId, goalsId)
+  useEffect(() => {
+    const displayGoal = async () => {
+      try {
+        if (user?.id && goalsId) {
+          const goalInfo = await getIndividualGoal(user.id, goalsId)
+          setGoal(goalInfo)
+        }
+      } catch (error) {
+        console.error('Error fetching goal:', error)
+      }
+    }
+
+    if (isLoaded && user?.id && goalsId) {
+      displayGoal()
+    }
+  }, [isLoaded, user, goalsId])
+
+  if (!goal) {
+    return (
+      <main className='max-w-3xl mx-auto px-4 py-8'>
+        <p className='text-gray-500 dark:text-gray-400'>Loading goal...</p>
+      </main>
+    )
+  }
 
   return (
     <main className='max-w-3xl mx-auto px-4 py-8'>
-      {/* Header */}
       <header className='mb-6'>
         <h1 className='text-3xl font-bold text-gray-900 dark:text-white'>
           Goal Details
@@ -61,7 +89,9 @@ export default async function OneGoalPage({ params }: ViewGoalProps) {
         <div className='bg-gray-50 dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700'>
           <p className='text-sm text-gray-500 dark:text-gray-400'>Deadline</p>
           <p className='text-base font-medium text-gray-800 dark:text-gray-100'>
-            {new Date(goal.deadline).toDateString()}
+            {goal.deadline
+              ? new Date(goal.deadline).toDateString()
+              : 'No deadline'}
           </p>
         </div>
 
@@ -73,8 +103,6 @@ export default async function OneGoalPage({ params }: ViewGoalProps) {
           </p>
         </div>
 
-        {/* Current Value & Goal Value on same line */}
-        {/* Current Value & Goal Value on same line */}
         <div className='flex gap-4'>
           {/* Current Value Card */}
           <div className='flex-1 bg-gray-50 dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700'>
@@ -97,6 +125,9 @@ export default async function OneGoalPage({ params }: ViewGoalProps) {
           </div>
         </div>
       </section>
+      {/* <section>
+        <GoalEditCard goalId={goalsId} initialData={{}} />
+      </section> */}
     </main>
   )
 }

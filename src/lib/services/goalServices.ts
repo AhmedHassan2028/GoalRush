@@ -78,3 +78,30 @@ export const deleteGoal = async (
 
   await apiClient.DELETE<void>(`user/${userId}/goals/${goalsId}`)
 }
+
+export const updateIndividualGoal = async (
+  userId: string,
+  goalsId: string,
+  updates: Partial<Goal>
+): Promise<Goal> => {
+  try {
+    if (!userId || !goalsId) {
+      throw new Error('Unauthorized')
+    }
+
+    const response = await apiClient.PATCH<{ goal: Goal }>(
+      `user/${userId}/goals/${goalsId}`,
+      updates, // <-- send only the fields you want to update
+      { cache: 'no-store' }
+    )
+
+    if (!response || !response.goal) {
+      throw new Error('Goal not found')
+    }
+
+    return response.goal
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
