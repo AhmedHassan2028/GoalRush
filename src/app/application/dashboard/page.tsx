@@ -135,6 +135,18 @@ const UserDashboard = () => {
     }
   }
   const editGoal = (goalsId: string) => {
+    const goal = userGoals.find(g => g.id === goalsId)
+
+    if (!goal) {
+      alert('Goal not found')
+      return
+    }
+
+    if (goal.status !== 'active') {
+      alert('You can only edit goals that are active.')
+      return
+    }
+
     if (user?.id) {
       router.push(`/application/user/${user.id}/goals/${goalsId}/edit`)
     }
@@ -311,8 +323,14 @@ const UserDashboard = () => {
               </div>
               <div className='self-center'>
                 <button
-                  className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium cursor-pointer'
-                  onClick={() => editGoal(goal.id)} // <-- Pass id here
+                  className={`text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium cursor-pointer ${
+                    goal.status !== 'active'
+                      ? 'opacity-50 cursor-not-allowed hover:text-blue-600 dark:hover:text-blue-400'
+                      : ''
+                  }`}
+                  onClick={() => editGoal(goal.id)}
+                  disabled={goal.status !== 'active'}
+                  aria-label='Edit goal'
                 >
                   <Pencil className='w-5 h-5' />
                 </button>

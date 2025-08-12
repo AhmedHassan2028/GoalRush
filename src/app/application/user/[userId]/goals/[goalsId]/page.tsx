@@ -69,11 +69,12 @@ export default function OneGoalPage() {
       const normalizedTarget = String(goal.value).trim().toLowerCase()
 
       const newStatus =
-        normalizedCurrent !== normalizedTarget ? 'expired/failed' : 'completed'
+        normalizedCurrent === normalizedTarget ? 'completed' : 'expired/failed'
 
       await updateIndividualGoal(user.id, goalsId, { status: newStatus })
 
       console.log(`Goal ${goalsId} marked as ${newStatus}`)
+      alert('Goal now completed, you can refresh the page')
     } catch (error) {
       console.error('Error completing goal:', error)
     }
@@ -109,16 +110,23 @@ export default function OneGoalPage() {
               <ArrowLeft className='w-5 h-5' />
             </Link>
             <button
-              className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium cursor-pointer'
+              className={`text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium cursor-pointer ${
+                goal?.status !== 'active' ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
               aria-label='Edit goal'
-              onClick={() => editGoal(goalsId)} // Pass goalsId here
+              onClick={() => editGoal(goalsId)}
+              disabled={goal?.status !== 'active'}
             >
               <Pencil className='w-5 h-5' />
             </button>
+
             <button
-              className='text-green-600 hover:text-green-700 dark:text-green-500 dark:hover:text-green-400 text-sm font-medium cursor-pointer'
-              aria-label='Edit goal'
-              onClick={() => completeGoal(goalsId)} // Pass goalsId here
+              className={`text-green-600 hover:text-green-700 dark:text-green-500 dark:hover:text-green-400 text-sm font-medium cursor-pointer ${
+                goal?.status !== 'active' ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+              aria-label='Complete goal'
+              onClick={() => completeGoal(goalsId)}
+              disabled={goal?.status !== 'active'}
             >
               <CircleCheckBig className='w-5 h-5' />
             </button>
@@ -173,9 +181,6 @@ export default function OneGoalPage() {
           </div>
         </div>
       </section>
-      {/* <section>
-        <GoalEditCard goalId={goalsId} initialData={{}} />
-      </section> */}
     </main>
   )
 }
