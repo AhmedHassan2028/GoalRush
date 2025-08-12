@@ -53,9 +53,7 @@ export default function OneGoalPage() {
   const completeGoal = async (goalsId: string) => {
     if (!user?.id) return
 
-    const confirmEnd = window.confirm(
-      'Are you sure you want to end this goal? If Goal is not reached, it will be considered as failed'
-    )
+    const confirmEnd = window.confirm('Are you sure you want to end this goal?')
     if (!confirmEnd) return
 
     try {
@@ -66,8 +64,12 @@ export default function OneGoalPage() {
         return
       }
 
+      // Normalize both values
+      const normalizedCurrent = String(goal.currentValue).trim().toLowerCase()
+      const normalizedTarget = String(goal.value).trim().toLowerCase()
+
       const newStatus =
-        goal.currentValue !== goal.value ? 'completed' : 'expired/failed'
+        normalizedCurrent !== normalizedTarget ? 'expired/failed' : 'completed'
 
       await updateIndividualGoal(user.id, goalsId, { status: newStatus })
 
