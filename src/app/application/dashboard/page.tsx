@@ -172,7 +172,7 @@ const UserDashboard = () => {
         </div>
         <div className='flex items-center gap-3'>
           <button
-            className='flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors'
+            className='flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors cursor-pointer'
             onClick={goalPage}
           >
             <BarChart3 className='h-4 w-4' />
@@ -279,9 +279,10 @@ const UserDashboard = () => {
               View your latest goals and access them
             </p>
           </div>
-          <button className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium'>
+          {/* Maybe use later */}
+          {/* <button className='text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium'>
             View All
-          </button>
+          </button> */}
         </div>
         <div className='space-y-4'>
           {userGoals.map(goal => (

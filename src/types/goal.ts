@@ -8,7 +8,7 @@ export interface Goal {
   goalType?: 'time' | 'count' | 'simple'
   value: string
   deadline: Date
-  status?: 'active' | 'completed' | 'expired'
+  status?: 'active' | 'completed' | 'expired/failed'
   createdBy?: string
   createdAt?: string
   currentValue?: string

@@ -33,7 +33,6 @@ import {
 import { Calendar } from '@/components/ui/calendar'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
-// Relaxed validations and all fields optional
 const formSchema = z.object({
   title: z.string().min(2, 'Title must be at least 2 characters').optional(),
   description: z

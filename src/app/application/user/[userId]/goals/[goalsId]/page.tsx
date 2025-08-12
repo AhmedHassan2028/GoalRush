@@ -1,14 +1,17 @@
 'use client'
 
 import Link from 'next/link'
-import { getIndividualGoal } from '@/lib/services/goalServices'
+import {
+  getIndividualGoal,
+  updateIndividualGoal,
+} from '@/lib/services/goalServices'
 import { ArrowLeft, Pencil } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useParams } from 'next/navigation'
 import type { Goal } from '@/types'
 import { useRouter } from 'next/navigation'
-// import GoalEditCard from '@/components/ui/editForm'
+import { CircleCheckBig } from 'lucide-react'
 
 export default function OneGoalPage() {
   const router = useRouter()
@@ -47,6 +50,33 @@ export default function OneGoalPage() {
     }
   }
 
+  const completeGoal = async (goalsId: string) => {
+    if (!user?.id) return
+
+    const confirmEnd = window.confirm(
+      'Are you sure you want to end this goal? If Goal is not reached, it will be considered as failed'
+    )
+    if (!confirmEnd) return
+
+    try {
+      const goal = await getIndividualGoal(user.id, goalsId)
+
+      if (!goal) {
+        console.error('Goal not found')
+        return
+      }
+
+      const newStatus =
+        goal.currentValue !== goal.value ? 'completed' : 'expired/failed'
+
+      await updateIndividualGoal(user.id, goalsId, { status: newStatus })
+
+      console.log(`Goal ${goalsId} marked as ${newStatus}`)
+    } catch (error) {
+      console.error('Error completing goal:', error)
+    }
+  }
+
   return (
     <main className='max-w-3xl mx-auto px-4 py-8'>
       <header className='mb-6'>
@@ -82,6 +112,13 @@ export default function OneGoalPage() {
               onClick={() => editGoal(goalsId)} // Pass goalsId here
             >
               <Pencil className='w-5 h-5' />
+            </button>
+            <button
+              className='text-green-600 hover:text-green-700 dark:text-green-500 dark:hover:text-green-400 text-sm font-medium cursor-pointer'
+              aria-label='Edit goal'
+              onClick={() => completeGoal(goalsId)} // Pass goalsId here
+            >
+              <CircleCheckBig className='w-5 h-5' />
             </button>
           </div>
         </div>
