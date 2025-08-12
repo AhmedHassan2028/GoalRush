@@ -300,28 +300,32 @@ const UserDashboard = () => {
           {userGoals.map(goal => (
             <div
               key={goal.id}
-              className='flex justify-between items-start gap-4 p-4 bg-muted/20 rounded-lg hover:bg-muted/30 transition-colors'
+              className='flex items-center gap-4 p-4 bg-muted/20 rounded-lg hover:bg-muted/30 transition-colors'
             >
-              <div className='flex-1'>
-                <p className='font-semibold text-lg'>{goal.title}</p>
-                <p className='text-sm text-muted-foreground mt-1'>
+              <div className='flex-[3] min-w-0'>
+                <p className='font-semibold text-lg truncate'>{goal.title}</p>
+                <p className='text-sm text-muted-foreground mt-1 truncate'>
                   {goal.description}
                 </p>
               </div>
-              <div className='self-center'>
+
+              <div className='flex-[1] text-center whitespace-nowrap'>
                 Deadline: {new Date(goal.deadline).toDateString()}
               </div>
-              <div className='self-center'>Status: {goal.status}</div>
 
-              <div className='self-center'>
+              <div className='flex-[1] text-center whitespace-nowrap'>
+                Status: {goal.status}
+              </div>
+
+              <div className='flex gap-4'>
                 <button
                   onClick={() => viewGoal(goal?.id)}
                   className='text-blue-600 hover:text-blue-700 cursor-pointer'
+                  aria-label='View goal'
                 >
                   <Eye className='w-5 h-5' />
                 </button>
-              </div>
-              <div className='self-center'>
+
                 <button
                   className={`text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium cursor-pointer ${
                     goal.status !== 'active'
@@ -334,11 +338,11 @@ const UserDashboard = () => {
                 >
                   <Pencil className='w-5 h-5' />
                 </button>
-              </div>
-              <div className='self-center'>
+
                 <button
                   className='text-red-600 hover:text-red-800 cursor-pointer'
-                  onClick={() => handleDeleteGoal(goal.id)} // <-- Wrap in arrow function to pass id
+                  onClick={() => handleDeleteGoal(goal.id)}
+                  aria-label='Delete goal'
                 >
                   <Trash2 className='w-5 h-5' />
                 </button>
