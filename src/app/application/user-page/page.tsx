@@ -24,6 +24,7 @@ export default function UserAccount() {
   const [userProfile, setuserProfile] = useState<UserProfile | null>(null)
   const { user, isLoaded } = useUser()
   const [countActiveGoals, setCountActiveGoals] = useState<number>(0)
+  const [countCompletedGoals, setCountCompletedGoals] = useState<number>(0)
 
   useEffect(() => {
     const loadUserProfile = async () => {
@@ -36,6 +37,9 @@ export default function UserAccount() {
         console.log('Fetched goals:', goals)
         setCountActiveGoals(
           goals.filter(goal => goal.status === 'active').length
+        )
+        setCountCompletedGoals(
+          goals.filter(goal => goal.status === 'completed').length
         )
         // setCountCompletedGoal(goals.filter(goal => goal.status === 'completed').length)
         if (!userProfile) {
@@ -87,7 +91,7 @@ export default function UserAccount() {
     },
     {
       label: 'Goals completed',
-      value: '0',
+      value: countCompletedGoals,
       icon: Award,
       color: 'text-purple-600',
     },

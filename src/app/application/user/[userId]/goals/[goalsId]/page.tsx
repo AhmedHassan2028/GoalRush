@@ -2,10 +2,11 @@
 
 import Link from 'next/link'
 import {
+  deleteGoal,
   getIndividualGoal,
   updateIndividualGoal,
 } from '@/lib/services/goalServices'
-import { ArrowLeft, Pencil } from 'lucide-react'
+import { ArrowLeft, Pencil, Trash2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useParams } from 'next/navigation'
@@ -80,6 +81,23 @@ export default function OneGoalPage() {
     }
   }
 
+  const handleDeleteGoal = async (goalsId: string) => {
+    if (!user?.id) return
+
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this goal? This action cannot be undone.'
+    )
+    if (!confirmed) return
+
+    try {
+      await deleteGoal(user.id, goalsId)
+      alert('Goal deleted successfuly')
+      router.push('/application/dashboard')
+    } catch (error) {
+      console.error(error)
+      alert('Failed to delete goal')
+    }
+  }
   return (
     <main className='max-w-3xl mx-auto px-4 py-8'>
       <header className='mb-6'>
@@ -129,6 +147,12 @@ export default function OneGoalPage() {
               disabled={goal?.status !== 'active'}
             >
               <CircleCheckBig className='w-5 h-5' />
+            </button>
+            <button
+              className='text-red-600 hover:text-red-800 cursor-pointer'
+              onClick={() => handleDeleteGoal(goal.id)} // <-- Wrap in arrow function to pass id
+            >
+              <Trash2 className='w-5 h-5' />
             </button>
           </div>
         </div>
