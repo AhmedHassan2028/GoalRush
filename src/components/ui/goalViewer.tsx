@@ -3,6 +3,11 @@ import { Goal } from '@/types'
 import { Eye } from 'lucide-react'
 import { useState } from 'react'
 
+interface ViewGoal {
+  userId: string
+  goalId: string
+}
+
 export default function GoalViewer({ userId, goalId }: ViewGoal) {
   const [goal, setGoal] = useState<Goal | null>(null)
   const [loading, setLoading] = useState(false)

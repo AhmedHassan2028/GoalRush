@@ -270,8 +270,8 @@ export default function Home() {
                   </span>
                 </h2>
                 <p className='text-lg text-muted-foreground max-w-2xl mx-auto'>
-                  Join thousands of developers and teams who trust our platform
-                  for their projects.
+                  Join GoalRush today and turn your ambitions into achievable
+                  milestones—one goal at a time.
                 </p>
                 <div className='flex flex-col sm:flex-row gap-4 justify-center'>
                   <Link
