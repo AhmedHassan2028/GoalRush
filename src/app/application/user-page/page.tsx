@@ -97,7 +97,9 @@ export default function UserAccount() {
     },
     {
       label: 'Account Creation Date',
-      value: userProfile?.createdAt,
+      value: userProfile?.createdAt
+        ? new Date(userProfile.createdAt).toLocaleDateString('en-CA')
+        : '',
       icon: Clock,
       color: 'text-orange-600',
     },
