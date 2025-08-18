@@ -179,7 +179,9 @@ export default function UserAccount() {
           <div className='flex flex-col sm:flex-row items-start sm:items-center gap-6'>
             <div className='relative'>
               <div className='w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold'>
-                AJ
+                {userProfile?.firstName || userProfile?.lastName
+                  ? `${userProfile?.firstName?.[0] ?? ''}${userProfile?.lastName?.[0] ?? ''}`.toUpperCase()
+                  : ''}
               </div>
               <button className='absolute -bottom-1 -right-1 w-8 h-8 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center transition-colors'>
                 <Camera className='h-4 w-4' />

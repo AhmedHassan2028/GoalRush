@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/firebaseAdmin'
+import { Goal } from '@/types'
 
-// GET individual goal
 export async function GET(
   _request: Request,
   context: { params: Promise<{ userId: string; goalsId: string }> }
@@ -24,7 +24,25 @@ export async function GET(
       return NextResponse.json({ error: 'Goal not found' }, { status: 404 })
     }
 
-    return NextResponse.json({ goal: { id: goalDoc.id, ...goalDoc.data() } })
+    const goal = { id: goalDoc.id, ...goalDoc.data() } as Goal
+
+    // ✅ Auto-expire if deadline passed and still active
+    const now = new Date()
+    if (
+      goal.deadline &&
+      new Date(goal.deadline) < now &&
+      goal.status === 'active'
+    ) {
+      await db
+        .collection('users')
+        .doc(userId)
+        .collection('goals')
+        .doc(goalsId)
+        .update({ status: 'expired/failed' })
+      goal.status = 'expired/failed'
+    }
+
+    return NextResponse.json({ goal })
   } catch (error) {
     console.error('Error fetching individual goal:', error)
     return NextResponse.json(
